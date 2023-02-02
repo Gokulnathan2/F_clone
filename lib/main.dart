@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:gokul_f/bloc/auth_bloc.dart';
+import 'package:gokul_f/bloc/auth_state.dart';
+import 'package:gokul_f/layouts/material_screen.dart';
+import 'package:gokul_f/repository/auth_repo.dart';
+import 'package:gokul_f/screens/forgot_screen.dart';
+//import 'package:gokul_f/screens/login/login_page.dart';
+//import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:gokul_f/screens/login/login_page.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Hive.initFlutter();
   runApp(const MyApp());
+}
+
+class Auth extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: ((context) => AuthBloc(LoginInitState(), AuthRepository())))
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/forgotScreen': (context) => ForgotScreen(),
+        },
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -59,8 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.delayed(const Duration(seconds: 5))
         .then((value) => {FlutterNativeSplash.remove()});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => loginScreen()));
+        context, MaterialPageRoute(builder: (context) => Auth()));
   }
+  //   Navigator.pushReplacement(
+  //       context, MaterialPageRoute(builder: (context) => MaterialPages()));
+  // }
 
   @override
   Widget build(BuildContext context) {
