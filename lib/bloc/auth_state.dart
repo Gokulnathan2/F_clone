@@ -17,3 +17,15 @@ class LoginErrorState extends AuthState {
   final String message;
   LoginErrorState({required this.message});
 }
+// abstract class AuthenticationState extends Equatable {
+//   @override
+//   List<Object> get props => [];
+// }
+
+// class AuthenticationUninitialized extends AuthenticationState {}
+
+// class AuthenticationAuthenticated extends AuthenticationState {}
+
+// class AuthenticationUnauthenticated extends AuthenticationState {}
+
+// class AuthenticationLoading extends AuthenticationState {}

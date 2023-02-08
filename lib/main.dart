@@ -6,6 +6,8 @@ import 'package:gokul_f/bloc/auth_state.dart';
 import 'package:gokul_f/layouts/material_screen.dart';
 import 'package:gokul_f/repository/auth_repo.dart';
 import 'package:gokul_f/screens/forgot_screen.dart';
+import 'package:gokul_f/screens/login/environment_screen.dart';
+import 'package:gokul_f/screens/login/view/login_view.dart';
 //import 'package:gokul_f/screens/login/login_page.dart';
 //import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,8 +32,9 @@ class Auth extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          '/': (context) => LoginScreen(),
+          '/': (context) => LoginView(),
           '/forgotScreen': (context) => ForgotScreen(),
+          '/environmentScreen': (context) => EnvironmentScreen(),
         },
       ),
     );
