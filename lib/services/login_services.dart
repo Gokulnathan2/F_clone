@@ -5,7 +5,10 @@
 // import 'package:gokul_f/layouts/pop_up.dart';
 // //import 'package:gokul_f/screens/login/login_page.dart';
 // import 'package:http/http.dart';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/model/login_response_model.dart';
 
 import '../model/login_model.dart';
@@ -40,6 +43,7 @@ import '../model/login_model.dart';
 // // }
 class LoginService {
   final Dio service;
+  static final storage = FlutterSecureStorage();
   LoginService({required this.service});
 
   Future<LoginResponseModel?> loginService(LoginModel loginModel) async {
@@ -53,13 +57,32 @@ class LoginService {
     }
 
     final options = Options(validateStatus: validateStatus);
-
+    //var token = data['token'];
+    //print(token);
     final response = await service.post(
       '/v1/login/',
       options: options,
       data: data,
     );
+    //  print(response);
+    // var res = jsonDecode(response.data);
+    //print(res);
+    // if (response.statusCode == 200) {
+    //   //LoginService.storeToken(res["token"]);
+    //   print('auth succes');
+    // } else {
+    //   print('errpr');
+    // }
 
+    // var response1 = response.data;
     return LoginResponseModel.fromJson(response.data);
+  }
+
+  static void storeToken(String token) async {
+    await storage.write(key: "token", value: token);
+  }
+
+  static Future<String?> getToken(String token) async {
+    return await storage.read(key: "token");
   }
 }

@@ -58,6 +58,7 @@ class AuthRepository {
   //   return await storage.read(key: "token");
   // }
 }
+
 // class UserRepositories {
 //   static String mainUrl = "https://devapifyxt.com";
 //   var loginUrl = '$mainUrl/v1/login/';
@@ -88,3 +89,4 @@ class AuthRepository {
 //     return response.data["token"];
 //   }
 // }
+//async 
