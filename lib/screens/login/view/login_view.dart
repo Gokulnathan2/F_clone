@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
         //     return await storage.read(key: "token");
         //   }
 
-        //   LoginService.storeToken(response1["token"]);
+        // LoginService.storeToken(data['token']);
         //   showNewVersionAvailableDialog(context);
         // QuickAlert.show(
         //   context: context,
@@ -173,7 +173,7 @@ class _LoginViewState extends State<LoginView> {
         IconImg().icon(),
         //SizedBox(height: height / 30),
         //width: 333,
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         Form(
           key: formKey,
           child: Column(

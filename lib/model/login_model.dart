@@ -6,6 +6,7 @@ part 'login_model.g.dart';
 class LoginModel {
   String? email;
   String? password;
+  //String? domain;
 
   LoginModel({this.email, this.password});
 

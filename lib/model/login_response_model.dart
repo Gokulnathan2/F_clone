@@ -6,10 +6,12 @@ part 'login_response_model.g.dart';
 class LoginResponseModel {
   String? token;
   String? error;
+  //String? domain;
 
   LoginResponseModel({
     this.token,
     this.error,
+    //this.domain,
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {

@@ -44,9 +44,12 @@ import '../model/login_model.dart';
 class LoginService {
   final Dio service;
   static final storage = FlutterSecureStorage();
+
+  //static var mapResponse;
   LoginService({required this.service});
 
   Future<LoginResponseModel?> loginService(LoginModel loginModel) async {
+    //Map mapResponse;
     final data = {
       'email': loginModel.email,
       'password': loginModel.password,
@@ -64,17 +67,8 @@ class LoginService {
       options: options,
       data: data,
     );
-    //  print(response);
-    // var res = jsonDecode(response.data);
-    //print(res);
-    // if (response.statusCode == 200) {
-    //   //LoginService.storeToken(res["token"]);
-    //   print('auth succes');
-    // } else {
-    //   print('errpr');
-    // }
-
-    // var response1 = response.data;
+    // mapResponse = jsonDecode(response.data);
+    // print(mapResponse['domain'].toString());
     return LoginResponseModel.fromJson(response.data);
   }
 
