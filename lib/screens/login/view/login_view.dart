@@ -6,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/core/constants/api.dart';
 import 'package:gokul_f/layouts/icon.dart';
+import 'package:gokul_f/model/login_response_model.dart';
+import 'package:gokul_f/screens/login/environment_screen.dart';
+
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -13,13 +16,9 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../services/login_services.dart';
-// import '../../services/login_services.dart';
-// import '../../services/login_services.dart';
-//import '../../../core/constants/app.dart';
+
+import '../../../services/network_handler.dart';
 import '../controller/login_controller.dart';
-//import '../service/login_service.dart';
-//part '../../../layouts/login_components.dart';
-//part 'components/login_components.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({Key? key}) : super(key: key);
@@ -34,8 +33,9 @@ class _LoginViewState extends State<LoginView> {
   bool isChecked = false;
   bool passToggle = true;
   final emailController = TextEditingController();
-  static final storage = FlutterSecureStorage();
+
   final passwordController = TextEditingController();
+  static final storage = FlutterSecureStorage();
   @override
   void initState() {
     // authBloc = BlocProvider.of<AuthBloc>(context);
@@ -103,53 +103,14 @@ class _LoginViewState extends State<LoginView> {
       final data = state.loginModel;
       if (data.error != null) {
         buildSnackBar(context, data.error!);
-        //   var response1 = data;
-        // var res = jsonDecode(token);
-
-        //  // var data1 = json.decode(response1);
-        //   void storeToken(String response1) async {
-        //     await storage.write(key: "token", value: response1);
-        //   }
-
-        //   Future<String?> getToken(String token) async {
-        //     return await storage.read(key: "token");
-        //   }
-
-        // LoginService.storeToken(data['token']);
-        //   showNewVersionAvailableDialog(context);
-        // QuickAlert.show(
-        //   context: context,
-        //   type: QuickAlertType.info,
-        //   text: 'Buy two, get one free',
-        // );
-        // showDialog(
-        //     context: context,
-
-        // showAlertDialog(
-        //   context,
-        // );
-        // WidgetsBinding.instance
-        //     .addPostFrameCallback((_) => showAlertDialog(context));
-        // Alert(
-        //   context: context,
-        //   type: AlertType.error,
-        //   title: "RFLUTTER ALERT",
-        //   desc: "Flutter is more awesome with RFlutter Alert.",
-        //   buttons: [
-        //     DialogButton(
-        //       child: Text(
-        //         "COOL",
-        //         style: TextStyle(color: Colors.white, fontSize: 20),
-        //       ),
-        //       onPressed: () => Navigator.pop(context),
-        //       width: 120,
-        //     )
-        //   ],
-        // ).show();
-        // // );
       } else {
-        Navigator.of(context).pushReplacementNamed('/environmentScreen');
+        print("bloc listener: ${data.domains?.length}");
         buildSnackBar(context, 'Login Success!');
+        // print(data);
+        Navigator.of(context).pushReplacementNamed(
+          '/environmentScreen',
+          arguments: data.domains as List<DomainModel>,
+        );
       }
     }
   }
@@ -219,7 +180,9 @@ class _LoginViewState extends State<LoginView> {
                         value: isChecked,
                         onChanged: (value) {
                           isChecked = !isChecked;
-                          setState(() {});
+                          setState(() {
+                            // login();
+                          });
                         },
                         //value: null,
                       ),
@@ -258,7 +221,10 @@ class _LoginViewState extends State<LoginView> {
                 height: 40,
                 child: ElevatedButton(
                   child: const Text('Log in With SSO'),
-                  onPressed: () {}, //child: null,
+                  onPressed: () {
+                    // EnvironmentService().getUsers();
+                    //  NetWorkHandler.buildUrl;
+                  }, //child: null,
                   // child: Text("Elevated Button with Icon"),
                   style: ButtonStyle(
                     backgroundColor:
@@ -378,16 +344,18 @@ class _LoginViewState extends State<LoginView> {
 
   Future<void> buildOnPressed(BuildContext context) async {
     if (formKey.currentState!.validate()) {
+      print(emailController.text.toString());
       context
           .read<LoginCubit>()
           .onPressedLogin(emailController, passwordController);
+      login();
       //LoginService.loginService.storeToken(["token"]);
     }
   }
 
   Widget buildChild(LoginState state) {
     return state is LoginLoading
-        ? CircularProgressIndicator.adaptive()
+        ? const CircularProgressIndicator.adaptive()
         : Text('Login');
   }
 

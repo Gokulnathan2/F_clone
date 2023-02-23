@@ -2,41 +2,41 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../layouts/icon.dart';
+import '../../../layouts/icon.dart';
+//import '../../layouts/icon.dart';
 
 //import '../../services/login_services.dart';
 
-class ForgotScreen extends StatefulWidget {
-  const ForgotScreen({super.key});
+class ResetScreen extends StatefulWidget {
+  const ResetScreen({super.key});
 
   @override
-  State<ForgotScreen> createState() => _ForgotScreenState();
+  State<ResetScreen> createState() => _ResetScreenState();
 }
 
-class _ForgotScreenState extends State<ForgotScreen> {
+class _ResetScreenState extends State<ResetScreen> {
   final _formfield = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController conpassController = TextEditingController();
+  bool passToggle = true;
   bool _isLoading = false;
   late String _errorMessage;
-
   Future<void> _resetPassword() async {
     setState(() {
       _isLoading = true;
-      //   _errorMessage = null;
+      // _errorMessage = null;
     });
 
     try {
       final response = await http.post(
         Uri.parse('https://devapifyxt.com/v1/password/reset/'),
-        body: json.encode({'email': emailController.text}),
+        body: json.encode({'email': passController.text}),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         // Password reset successfully
-        print('ss');
-        Navigator.of(context).pushNamed('/resetScreen');
         showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -53,13 +53,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
         );
       } else {
         // Password reset failed
-        Navigator.of(context).pushNamed('/resetScreen');
-        print(response.statusCode);
-        // final data = json.decode(response.body) as Map<String, dynamic>;
-        // setState(() => _errorMessage = data['message']);
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        setState(() => _errorMessage = data['message']);
       }
     } catch (error) {
-      print(error);
       setState(() => _errorMessage = 'An error occurred. Please try again.');
     } finally {
       setState(() => _isLoading = false);
@@ -84,25 +81,25 @@ class _ForgotScreenState extends State<ForgotScreen> {
             ),
           ),
           SizedBox(height: 50),
-          SafeArea(
-            child: Container(
-              // child: Positioned(
-              //child: AppBar(
+          // SafeArea(
+          //   child: Container(
+          //     // child: Positioned(
+          //     //child: AppBar(
 
-              child: IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-              //   backgroundColor: Colors.transparent,
-              //   elevation: 0.0,
-              // ),
-              // ),
-            ),
-          ),
+          //     child: IconButton(
+          //       onPressed: () => Navigator.of(context).pop(),
+          //       icon: Icon(
+          //         Icons.arrow_back,
+          //         color: Colors.white,
+          //         size: 30,
+          //       ),
+          //     ),
+          //     //   backgroundColor: Colors.transparent,
+          //     //   elevation: 0.0,
+          //     // ),
+          //     // ),
+          //   ),
+          // ),
           IconImg().icon(),
           SizedBox(height: 114),
           Form(
@@ -117,7 +114,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                       alignment: const Alignment(0, 30),
                       padding: const EdgeInsets.all(20.0),
                       child: const Text(
-                        "Forgot password?",
+                        "Reset password",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -135,7 +132,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                       // alignment: const Alignment(0, 30),
                       // padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        "Enter your email and we'll send you a link to reset your password",
+                        "Please enter your new password",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white38,
@@ -148,56 +145,90 @@ class _ForgotScreenState extends State<ForgotScreen> {
                 SizedBox(height: 20),
                 Container(
                   width: 333,
-
                   child: TextFormField(
-                    controller: emailController,
-                    autocorrect: true,
+                    controller: passController,
+                    //buildTextField(passController),
+                    obscureText: passToggle,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "Email",
+                      hintText: "Password",
                       helperText: '',
                       border: const OutlineInputBorder(),
+                      suffix: InkWell(
+                        onTap: () {
+                          setState(() {
+                            passToggle = !passToggle;
+                          });
+                        },
+                        child: Icon(passToggle
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
                     ),
                     validator: (value) {
-                      bool emailValid = RegExp(
-                              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-                          .hasMatch(value!);
                       if (value!.isEmpty) {
-                        return "Enter email id";
-                      } else if (!emailValid) {
-                        return "Enter valid email";
+                        return "Enter password";
+                      } else if (passController.text.length < 6) {
+                        return "Password length is too short";
                       }
                     },
                   ),
-                  // ),
                 ),
-                // if (_errorMessage != null)
-                //   Text(_errorMessage, style: TextStyle(color: Colors.red)),
-                // SizedBox(height: 20),
+                // SizedBox(height: 30),
+                Container(
+                  width: 333,
+                  child: TextFormField(
+                    controller: conpassController,
+                    //buildTextField(passController),
+                    obscureText: passToggle,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: "Confirm Password",
+                      helperText: '',
+                      border: const OutlineInputBorder(),
+                      suffix: InkWell(
+                        onTap: () {
+                          setState(() {
+                            passToggle = !passToggle;
+                          });
+                        },
+                        child: Icon(passToggle
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Enter password";
+                      } else if (passController.text.length < 6) {
+                        return "Password length is too short";
+                      }
+                    },
+                  ),
+                ),
+                //  SizedBox(height: 20),
                 Container(
                   width: 333,
                   height: 40,
                   child: ElevatedButton(
-                    //child: const Text('submit'),
-                    child: _isLoading
-                        ? CircularProgressIndicator()
-                        : Text('Reset Password'),
+                    child: const Text('Submit'),
+// child: _isLoading ? CircularProgressIndicator() : Text('Reset Password'),
+//               onPressed: _isLoading ? null : _resetPassword,
+                    onPressed: () {
+                      if (_formfield.currentState!.validate()) {
+                        print("success");
 
-                    onPressed: _isLoading ? null : _resetPassword,
-
-                    // onPressed: () {
-                    //   if (_formfield.currentState!.validate()) {
-                    //     _isLoading ? null : _resetPassword;
-                    //     print("success");
-
-                    //     print(emailController.text.toString());
-                    //     Navigator.of(context).pushNamed('/resetScreen');
-                    //   }
-                    // }, //child: null,
+                        // print(Controller.text.toString());
+                      }
+                    }, //child: null,
                     // child: Text("Elevated Button with Icon"),
                     style: ButtonStyle(
                       backgroundColor:

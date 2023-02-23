@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/model/login_response_model.dart';
 
+//import '../model/environment_model.dart';
 import '../model/login_model.dart';
 
 // //import '../layouts/pop_up.dart';
@@ -48,7 +49,7 @@ class LoginService {
   //static var mapResponse;
   LoginService({required this.service});
 
-  Future<LoginResponseModel?> loginService(LoginModel loginModel) async {
+  Future<LoginResponseModel?> loginService(loginModel) async {
     //Map mapResponse;
     final data = {
       'email': loginModel.email,
@@ -59,20 +60,18 @@ class LoginService {
       return status! <= 500;
     }
 
-    final options = Options(validateStatus: validateStatus);
-    //var token = data['token'];
-    //print(token);
+    final options =
+        Options(validateStatus: validateStatus, headers: {"source": "android"});
     final response = await service.post(
       '/v1/login/',
       options: options,
       data: data,
     );
-    // mapResponse = jsonDecode(response.data);
-    // print(mapResponse['domain'].toString());
+    print("response in loginservice: ${response}");
     return LoginResponseModel.fromJson(response.data);
   }
 
-  static void storeToken(String token) async {
+  static Future<void> storeToken(String token) async {
     await storage.write(key: "token", value: token);
   }
 

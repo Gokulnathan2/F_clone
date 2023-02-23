@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +25,25 @@ class LoginCubit extends Cubit<LoginState> {
     final model = LoginModel(
       email: emailController.text,
       password: passwordController.text,
+      // category: null,
+      // types: null,
+      // domains: null,
     );
 
     final response = await service.loginService(model);
-
-    print(json.encode(response));
-
+    //  print(response['domains']);
+    print("Login controller: response ${json.encode(response)}");
+    // print(response);
+    //return response;
     if (response is LoginResponseModel) {
-      emit(LoginCompleted(response));
+      if (response.error != '') {
+        print("token is available: ");
+        LoginService.storeToken(response.token!);
+        emit(LoginCompleted(response));
+      } else {
+        print("error encountered");
+        emit(LoginError("Error encountered while login"));
+      }
     } else {
       // emit(LoginError('Error'));
       emit(LoginInitial());

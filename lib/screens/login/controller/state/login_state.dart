@@ -19,6 +19,20 @@ class LoginCompleted extends LoginState {
   const LoginCompleted(this.loginModel);
 }
 
+class EnvironmentInitial extends LoginState {
+  const EnvironmentInitial();
+}
+
+class EnvironmentLoading extends LoginState {
+  const EnvironmentLoading();
+}
+
+class EnvironmentCompleted extends LoginState {
+  final LoginResponseModel loginModel;
+
+  const EnvironmentCompleted(this.loginModel);
+}
+
 class LoginError extends LoginState {
   final String message;
 
