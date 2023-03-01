@@ -6,18 +6,10 @@ part 'login_model.g.dart';
 class LoginModel {
   String? email;
   String? password;
-  // String? domain;
-  // String? category;
-  // String? types;
-
-  // String? domains;
 
   LoginModel({
     required this.email,
     required this.password,
-    // String? category,
-    // String? types,
-    // String? domains
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {

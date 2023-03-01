@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../layouts/icon.dart';
+import '../../../../layouts/icon.dart';
 
 //import '../../services/login_services.dart';
 
@@ -55,8 +55,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
         // Password reset failed
         Navigator.of(context).pushNamed('/resetScreen');
         print(response.statusCode);
-        // final data = json.decode(response.body) as Map<String, dynamic>;
-        // setState(() => _errorMessage = data['message']);
       }
     } catch (error) {
       print(error);
@@ -68,9 +66,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // double w = MediaQuery.of(context).size.width;
-    // double h = MediaQuery.of(context).size.height;
-    //
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -175,9 +170,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
                   ),
                   // ),
                 ),
-                // if (_errorMessage != null)
-                //   Text(_errorMessage, style: TextStyle(color: Colors.red)),
-                // SizedBox(height: 20),
                 Container(
                   width: 333,
                   height: 40,
@@ -189,23 +181,11 @@ class _ForgotScreenState extends State<ForgotScreen> {
 
                     onPressed: _isLoading ? null : _resetPassword,
 
-                    // onPressed: () {
-                    //   if (_formfield.currentState!.validate()) {
-                    //     _isLoading ? null : _resetPassword;
-                    //     print("success");
-
-                    //     print(emailController.text.toString());
-                    //     Navigator.of(context).pushNamed('/resetScreen');
-                    //   }
-                    // }, //child: null,
-                    // child: Text("Elevated Button with Icon"),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFFF55600)),
                       // primary: Colors.puwhiple,
                     ),
-                    //  child: Text(tlogin.toUppercase),
-                    // ),
                   ),
                 ),
               ],
@@ -215,6 +195,4 @@ class _ForgotScreenState extends State<ForgotScreen> {
       ),
     );
   }
-
-  //RaisedButton({required Text child, required Null Function() onPressed}) {}
 }

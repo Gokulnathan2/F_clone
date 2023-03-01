@@ -221,11 +221,7 @@ class _LoginViewState extends State<LoginView> {
                 height: 40,
                 child: ElevatedButton(
                   child: const Text('Log in With SSO'),
-                  onPressed: () {
-                    // EnvironmentService().getUsers();
-                    //  NetWorkHandler.buildUrl;
-                  }, //child: null,
-                  // child: Text("Elevated Button with Icon"),
+                  onPressed: () {},
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(const Color(0xFFF55600)),
@@ -413,5 +409,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-
-//}

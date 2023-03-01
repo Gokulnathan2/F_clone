@@ -81,25 +81,6 @@ class _ResetScreenState extends State<ResetScreen> {
             ),
           ),
           SizedBox(height: 50),
-          // SafeArea(
-          //   child: Container(
-          //     // child: Positioned(
-          //     //child: AppBar(
-
-          //     child: IconButton(
-          //       onPressed: () => Navigator.of(context).pop(),
-          //       icon: Icon(
-          //         Icons.arrow_back,
-          //         color: Colors.white,
-          //         size: 30,
-          //       ),
-          //     ),
-          //     //   backgroundColor: Colors.transparent,
-          //     //   elevation: 0.0,
-          //     // ),
-          //     // ),
-          //   ),
-          // ),
           IconImg().icon(),
           SizedBox(height: 114),
           Form(
@@ -220,16 +201,12 @@ class _ResetScreenState extends State<ResetScreen> {
                   height: 40,
                   child: ElevatedButton(
                     child: const Text('Submit'),
-// child: _isLoading ? CircularProgressIndicator() : Text('Reset Password'),
-//               onPressed: _isLoading ? null : _resetPassword,
+
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
                         print("success");
-
-                        // print(Controller.text.toString());
                       }
-                    }, //child: null,
-                    // child: Text("Elevated Button with Icon"),
+                    },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFFF55600)),
@@ -246,6 +223,4 @@ class _ResetScreenState extends State<ResetScreen> {
       ),
     );
   }
-
-  //RaisedButton({required Text child, required Null Function() onPressed}) {}
 }

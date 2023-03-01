@@ -75,7 +75,8 @@ class LoginService {
     await storage.write(key: "token", value: token);
   }
 
-  static Future<String?> getToken(String token) async {
-    return await storage.read(key: "token");
+  static Future<String?> getToken() async {
+    dynamic token = await storage.read(key: "token");
+    return token;
   }
 }

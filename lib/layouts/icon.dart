@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 
 class IconImg {
   icon() {
-    // return SizedBox(
-    //   height: 30,
-    // )
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

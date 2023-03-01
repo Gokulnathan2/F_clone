@@ -6,10 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 class LoginResponseModel {
   String? token;
   String? error;
-  // String? category;
   // String? types;
-  // Array? domains;
-  // String? domain;
   String? category;
   // List<String>? types;
   List<DomainModel>? domains;
