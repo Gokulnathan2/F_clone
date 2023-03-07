@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gokul_f/layouts/bottom_navigation_Screen.dart';
+import 'package:gokul_f/layouts/custombottom_navigation.dart';
+import 'package:gokul_f/screens/emergency_screen.dart';
 import 'package:gokul_f/screens/job.dart';
 import 'package:gokul_f/model/login_response_model.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
@@ -29,9 +31,15 @@ class ScreenRoute {
         return MaterialPageRoute(builder: (_) => ResetScreen());
       case '/battomNavigation':
         // print("url om screen route: ${url.toString()}");
-        return MaterialPageRoute(builder: (_) => BottomNavigation());
+        return MaterialPageRoute(builder: (_) => MyApp1());
+      case '/cusBattomNavigation':
+        // print("url om screen route: ${url.toString()}");
+        return MaterialPageRoute(builder: (_) => CusBottomNavigation());
       case '/jobScreen':
         return MaterialPageRoute(builder: (_) => const JobScreen());
+      case '/emergencyScreen':
+        return MaterialPageRoute(builder: (_) => const EmergencyScreen());
+
       default:
         return MaterialPageRoute(builder: (_) => LoginView());
     }

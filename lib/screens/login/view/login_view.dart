@@ -102,15 +102,17 @@ class _LoginViewState extends State<LoginView> {
     if (state is LoginCompleted) {
       final data = state.loginModel;
       if (data.error != null) {
+        print('derr${data.error}');
         buildSnackBar(context, data.error!);
       } else {
         print("bloc listener: ${data.domains?.length}");
-        buildSnackBar(context, 'Login Success!');
+
         // print(data);
         Navigator.of(context).pushReplacementNamed(
           '/environmentScreen',
           arguments: data.domains as List<DomainModel>,
         );
+        buildSnackBar(context, 'Login Success!');
       }
     }
   }
@@ -131,17 +133,17 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
         ),
-        IconImg().icon(),
+        // IconImg().icon(),
         //SizedBox(height: height / 30),
         //width: 333,
-        const SizedBox(height: 50),
+        SizedBox(height: 50),
         Form(
           key: formKey,
           child: Column(
             // IconImg().icon(),
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //IconImg().icon(),
+              IconImg().icon(),
               SizedBox(height: height / 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +165,6 @@ class _LoginViewState extends State<LoginView> {
               buildTextField(emailController),
               SizedBox(height: 20),
               buildTextPassField(passwordController),
-
               Container(
                 width: 333,
                 child: Row(
@@ -230,7 +231,7 @@ class _LoginViewState extends State<LoginView> {
                   //  child: Text(tlogin.toUppercase),
                 ),
               ),
-              SizedBox(height: 130),
+              SizedBox(height: 100),
               Container(
                 //alignment: Alignment(0, -100),
                 child: TextButton(

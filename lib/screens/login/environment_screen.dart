@@ -32,9 +32,10 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    bool isTab = true;
     int currentIndex = 1;
     int _currentSlide = 0;
+    dynamic borderColor = Colors.white;
 
     print("domains in environment: ${widget.domains}");
     var domains = widget.domains as List<DomainModel>;
@@ -134,6 +135,8 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                           // int currentIndex = controller.page?.round() ?? 0;
                           print('v${id}');
                           // print(currentIndex);
+                          // final bordercolor =
+                          //     isTab ? Colors.white : Colors.orange;
 
                           String baseUrls = domains[i].host!;
                           print("current url index ${i}: ${baseUrls}");
@@ -145,16 +148,21 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                               alignment: Alignment(0, 0),
                               // child: Ink(
                               decoration: BoxDecoration(
+                                //   color: Colors.white,
+
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
+                                //  border: Border.all(color: Color),
                                 border: Border.all(color: Colors.white),
+                                //border:  color:_borderColor,
                               ),
                               child: InkWell(
                                 onTap: () {
+                                  setState(() {
+                                    borderColor = Colors.black;
+                                  });
                                   baseUrl(baseUrls);
-                                  // onpressed(Navigator.of(context).pushNamed(
-                                  //     '/battomNavigation',
-                                  //     arguments: baseUrls));
+
                                   print('es ${baseUrls}');
 
                                   DashBoardService(
@@ -163,8 +171,6 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                                   ).dashBoardService();
                                 },
 
-                                //  highlightColor: Colors.orange,
-                                //   highlightColor: Colors.black,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
                                   child: Text(
@@ -181,17 +187,28 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                                 ),
 
                                 // ),
-                                // onTap: () {
-                                //   setState(() {
-                                //     _borderColor = Colors.orange;
-                                //   });
-                                //   DashBoardService(
-                                //     service: Dio(BaseOptions(
-                                //         baseUrl: 'https://${baseUrls}')),
-                                //   ).dashBoardService();
-                                // },
                               ),
                             ),
+                            // onTap: () {
+                            //   setState(() {
+
+                            //   });
+                            //   baseUrl(baseUrls);
+
+                            //   print('es ${baseUrls}');
+
+                            //   DashBoardService(
+                            //     service: Dio(BaseOptions(
+                            //         baseUrl: 'https://${baseUrls}')),
+                            //   ).dashBoardService();
+                            //   // setState(() {
+                            //   //   _borderColor = Colors.orange;
+                            //   // });
+                            //   // DashBoardService(
+                            //   //   service: Dio(BaseOptions(
+                            //   //       baseUrl: 'https://${baseUrls}')),
+                            //   // ).dashBoardService();
+                            // },
                           );
                         },
                       ),
@@ -241,7 +258,7 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
     if (base != null) {
       print('gi${base}');
       return Navigator.of(context).pushReplacementNamed(
-        '/battomNavigation',
+        '/cusBattomNavigation',
       );
     } else {
       print('err');

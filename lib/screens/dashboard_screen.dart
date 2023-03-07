@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/layouts/icon.dart';
+import 'package:gokul_f/screens/emergency_screen.dart';
 import 'package:gokul_f/screens/job.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
 import 'package:gokul_f/services/dashboard_services.dart';
 
 import '../model/dash_board_model.dart';
+import '../services/emergency_services.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -49,12 +51,8 @@ class _DashBoardState extends State<DashBoardScreen> {
   // return Text1;
   @override
   Widget build(BuildContext context) {
-    // var b = baseurls;
-    //  var baseurls = widget.baseurls as String?;
-
-    // var data = ba.toString();
-//for (var d in bal) {
-    // print('url${baseurl1}');
+    dynamic baseurl1 = EnvironmentScreenState.getBaseurl() as dynamic;
+    var base = print('url${baseurl1}');
     // print("url ${baseurl1}");
     print("emergency: ${bal?.emergency}");
     print("jobs: ${bal?.all_jobs}");
@@ -118,207 +116,242 @@ class _DashBoardState extends State<DashBoardScreen> {
                 String t2 = text2.toString();
                 int text3 = bal?.assigned_to_me as int;
                 String t3 = text3.toString();
-                return Container(
-                    //width: double.infinity,
-                    // height: double.infinity,
-                    child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: GridView(
-                    // ignore: sort_child_properties_last
-                    children: [
-                      Container(
-                        height: 333,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(
-                            254,
-                            238,
-                            229,
-                            1,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // WidgetSpan(
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Icon(
-                              Icons.warning_outlined,
-                              size: 28,
-                              color: Color.fromRGBO(245, 86, 0, 1),
-                            ),
-                            // ),
-                            Text(
-                              t,
-                              style: TextStyle(
-                                  height: 1.2,
-                                  color: Color.fromRGBO(
-                                    25,
-                                    44,
-                                    73,
-                                    1,
+                return
+                    //Container(
+                    //     //width: double.infinity,
+                    //     // height: double.infinity,
+                    //     child: Padding(
+                    //   padding: const EdgeInsets.all(15),
+                    Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: GridView(
+                        // ignore: sort_child_properties_last
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              EmergencyService(
+                                service: Dio(BaseOptions(
+                                    baseUrl: 'https://${baseurl1}')),
+                              ).emergencyService();
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new EmergencyScreen()));
+                            },
+                            child: Container(
+                              height: 333,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromRGBO(
+                                  254,
+                                  238,
+                                  229,
+                                  1,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // WidgetSpan(
+                                  SizedBox(
+                                    height: 40,
                                   ),
-                                  fontSize: 48,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto'),
+                                  Icon(
+                                    Icons.warning_outlined,
+                                    size: 28,
+                                    color: Color.fromRGBO(245, 86, 0, 1),
+                                  ),
+                                  // ),
+                                  Text(
+                                    t,
+                                    style: TextStyle(
+                                        height: 1.2,
+                                        color: Color.fromRGBO(
+                                          25,
+                                          44,
+                                          73,
+                                          1,
+                                        ),
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Roboto'),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                      textAlign: TextAlign.right,
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: "Emergency",
+                                            style: TextStyle(
+                                              color:
+                                                  Color.fromRGBO(25, 44, 73, 1),
+                                              fontSize: 16,
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ]))
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              height: 10,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromRGBO(
+                                253,
+                                245,
+                                235,
+                                1,
+                              ),
                             ),
-                            RichText(
-                                textAlign: TextAlign.right,
-                                text: TextSpan(children: [
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                //  WidgetSpan(
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Icon(
+                                  Icons.work_outlined,
+                                  size: 28,
+                                  color: Color.fromRGBO(248, 158, 22, 1),
+                                ),
+                                // ),
+                                Text(
+                                  t2,
+                                  style: TextStyle(
+                                    height: 1.2,
+                                    color: Color.fromRGBO(25, 44, 73, 1),
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
                                   TextSpan(
-                                      text: "Emergency",
+                                      text: "All Jobs",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(25, 44, 73, 1),
+                                          fontSize: 16,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold))
+                                ]))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromRGBO(
+                                238,
+                                238,
+                                251,
+                                1,
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                //    WidgetSpan(
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Icon(
+                                  Icons.assignment_outlined,
+                                  size: 28,
+                                  color: Color.fromRGBO(85, 89, 223, 1),
+                                ),
+                                // ),
+                                Text(
+                                  t3,
+                                  style: TextStyle(
+                                      height: 1.2,
+                                      color: Color.fromRGBO(25, 44, 73, 1),
+                                      fontSize: 48,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto'),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "Assigned To Me",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromRGBO(25, 44, 73, 1),
                                         fontSize: 16,
                                         fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
                                       ))
                                 ]))
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(
-                            253,
-                            245,
-                            235,
-                            1,
+                              ],
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //  WidgetSpan(
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Icon(
-                              Icons.work_outlined,
-                              size: 28,
-                              color: Color.fromRGBO(248, 158, 22, 1),
-                            ),
-                            // ),
-                            Text(
-                              t2,
-                              style: TextStyle(
-                                height: 1.2,
-                                color: Color.fromRGBO(25, 44, 73, 1),
-                                fontSize: 48,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Roboto',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            RichText(
-                                text: TextSpan(children: [
-                              TextSpan(
-                                  text: "All Jobs",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(25, 44, 73, 1),
-                                      fontSize: 16,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold))
-                            ]))
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(
-                            238,
-                            238,
-                            251,
-                            1,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //    WidgetSpan(
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Icon(
-                              Icons.assignment_outlined,
-                              size: 28,
-                              color: Color.fromRGBO(85, 89, 223, 1),
-                            ),
-                            // ),
-                            Text(
-                              t3,
-                              style: TextStyle(
-                                  height: 1.2,
-                                  color: Color.fromRGBO(25, 44, 73, 1),
-                                  fontSize: 48,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto'),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            RichText(
-                                text: TextSpan(children: [
-                              TextSpan(
-                                  text: "Assigned To Me",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(25, 44, 73, 1),
-                                    fontSize: 16,
-                                    fontFamily: 'Roboto',
-                                  ))
-                            ]))
-                          ],
-                        ),
-                      ),
-                      // Container(
-                      //   alignment: Alignment(-3, 2),
-                      // SizedBox(
 
-                      // child: GestureDetector(
-                      // Container(
-                      //   alignment: Alignment(-3, 2),
-                      Align(
-                        alignment: Alignment(-3, 2),
-                        // alignment: Alignment.center,
-                        child: ElevatedButton(
-                          child: Text('+ Create Job'),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/jobScreen');
-                          },
-                          style: ButtonStyle(
-                            // alignment: Alignment(-3, 2),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 4, 31, 68)),
-                            // primary: Colors.puwhiple,
-                          ),
+                          // Container(
+                          //   alignment: Alignment(-3, 2),
+                          // SizedBox(
+
+                          // child: GestureDetector(
+                          // Container(
+                          //   alignment: Alignment(-3, 2),
+
+                          // ),
+                          //),
+                          //  ),
+                          //),
+                        ],
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 2 / 3,
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 27.36,
+                            crossAxisSpacing: 10),
+                      ),
+                    ),
+                    // Column(
+                    //   children: [
+                    Container(
+                      // child: Align(
+                      alignment: Alignment(0, 0.8),
+                      // alignment: Alignment.center,
+                      child: ElevatedButton(
+                        child: Text('+ Create Job'),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new JobScreen()));
+                        },
+                        style: ButtonStyle(
+                          // alignment: Alignment(-3, 2),
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 4, 31, 68)),
+                          // primary: Colors.puwhiple,
                         ),
                       ),
                       // ),
-                      //),
-                      //  ),
-                      //),
-                    ],
+                    ),
+                    //   ],
+                    // ),
+                  ],
+                );
 
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 2 / 3,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 27.36,
-                        crossAxisSpacing: 10),
-                  ),
-                ));
+                // ));
               } else if (snapshot.hasError) {
                 return Text('Result: ${snapshot.data}');
               } else {
