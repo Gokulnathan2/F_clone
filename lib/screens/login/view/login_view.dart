@@ -101,10 +101,13 @@ class _LoginViewState extends State<LoginView> {
   void buildBlocListener(context, state) {
     if (state is LoginCompleted) {
       final data = state.loginModel;
+      print(data);
       if (data.error != null) {
         print('derr${data.error}');
+        print('gogo');
         buildSnackBar(context, data.error!);
       } else {
+        //  print('derr${data}');
         print("bloc listener: ${data.domains?.length}");
 
         // print(data);

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 //import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:gokul_f/screens/login/view/forgot_screen.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
 import 'package:gokul_f/screens/login/view/login_view.dart';
 import 'package:gokul_f/screens/login/view/reset_screen.dart';
+import 'package:gokul_f/services/login_services.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -73,18 +75,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    //logout();
     //SchedulerBinding.instance.addPostFrameCallback((_) {
     // add your code here.
     Future.delayed(const Duration(seconds: 5))
         .then((value) => {FlutterNativeSplash.remove()});
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => MaterialPages()));
+
     //  });
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
     throw UnimplementedError();
   }
 }

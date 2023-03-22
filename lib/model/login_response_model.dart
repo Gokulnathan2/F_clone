@@ -21,9 +21,12 @@ class LoginResponseModel {
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    var domainList = json['domains'] as List;
-    List<DomainModel> parsedDomainList =
-        domainList.map((d) => DomainModel.fromJson(d)).toList();
+    var domainList = json['domains'];
+    List<DomainModel> parsedDomainList = [];
+    if (domainList != null) {
+      parsedDomainList = List<DomainModel>.from(
+          domainList.map((d) => DomainModel.fromJson(d)));
+    }
     return LoginResponseModel(
         token: json['token'] as String?,
         error: json['error'] as String?,

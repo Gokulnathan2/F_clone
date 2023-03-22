@@ -27,7 +27,7 @@ class EnvironmentScreen extends StatefulWidget {
 
 class EnvironmentScreenState extends State<EnvironmentScreen> {
   static final storage = FlutterSecureStorage();
-
+  final List _selectedIndexs = [];
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -131,6 +131,7 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
 
                         itemCount: domains.length,
                         itemBuilder: (context, i, id) {
+                          final isSelected = _selectedIndexs.contains(i);
                           //  final controller = PageController();
                           // int currentIndex = controller.page?.round() ?? 0;
                           print('v${id}');
@@ -142,6 +143,24 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                           print("current url index ${i}: ${baseUrls}");
                           print("current index ${i}: ${domains[i]}");
                           return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  print('gdgg');
+                                  _selectedIndexs.remove(i);
+                                } else {
+                                  _selectedIndexs.add(i);
+                                }
+                              });
+                              baseUrl(baseUrls);
+
+                              print('es ${baseUrls}');
+
+                              DashBoardService(
+                                service: Dio(BaseOptions(
+                                    baseUrl: 'https://${baseUrls}')),
+                              ).dashBoardService();
+                            },
                             child: Container(
                               width: 220,
                               height: 120,
@@ -153,41 +172,49 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
                                 //  border: Border.all(color: Color),
-                                border: Border.all(color: Colors.white),
-                                //border:  color:_borderColor,
+                                //  border: Border.all(color: Colors.white),
+                                border: isSelected
+                                    ? Border.all(
+                                        color: Color.fromARGB(255, 230, 81, 0),
+                                        width: 4)
+                                    : null,
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    borderColor = Colors.black;
-                                  });
-                                  baseUrl(baseUrls);
+                              //  child: InkWell(
+                              // onTap: () {
+                              //   setState(() {
+                              //     if (isSelected) {
+                              //       _selectedIndexs.remove(i);
+                              //     } else {
+                              //       _selectedIndexs.add(i);
+                              //     }
+                              //   });
+                              //   baseUrl(baseUrls);
 
-                                  print('es ${baseUrls}');
+                              //   print('es ${baseUrls}');
 
-                                  DashBoardService(
-                                    service: Dio(BaseOptions(
-                                        baseUrl: 'https://${baseUrls}')),
-                                  ).dashBoardService();
-                                },
+                              //   DashBoardService(
+                              //     service: Dio(BaseOptions(
+                              //         baseUrl: 'https://${baseUrls}')),
+                              //   ).dashBoardService();
+                              // },
 
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Text(
-                                    domains[i].name!,
-                                    // domains[i].name!,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Text(
+                                  domains[i].name!,
+                                  // domains[i].name!,
 
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
                                   ),
                                 ),
-
-                                // ),
                               ),
+
+                              // ),
+                              //  ),
                             ),
                             // onTap: () {
                             //   setState(() {

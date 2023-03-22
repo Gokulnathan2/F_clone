@@ -29,7 +29,7 @@ class DashBoardService {
     );
     print(token);
     if (response.statusCode == 200) {
-      print('ddddsuccess');
+      print('sucess');
     } else {
       print(response.statusCode);
     }

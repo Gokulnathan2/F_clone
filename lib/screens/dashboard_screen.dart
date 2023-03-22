@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:gokul_f/cubit/pagination_cubit.dart';
 import 'package:gokul_f/layouts/icon.dart';
+import 'package:gokul_f/repository/pagination_respository.dart';
+import 'package:gokul_f/screens/alljobs_screen.dart';
+import 'package:gokul_f/screens/assign_to_be_Screen.dart';
 import 'package:gokul_f/screens/emergency_screen.dart';
 import 'package:gokul_f/screens/job.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
@@ -20,7 +25,7 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoardScreen> {
   static final storage = FlutterSecureStorage();
-
+  late final PaginationRepository repository;
   DashBoardResponseModel? bal;
 
   // get future => null;
@@ -91,6 +96,7 @@ class _DashBoardState extends State<DashBoardScreen> {
               print("emergency: ${bal?.emergency}");
               print("jobs: ${bal?.all_jobs}");
               // //  }
+              // await removeToken();
               await storage.deleteAll();
               // print('bal${bal}');
               // print(DashBoardResponseModel().emergency);
@@ -131,15 +137,23 @@ class _DashBoardState extends State<DashBoardScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              EmergencyService(
-                                service: Dio(BaseOptions(
-                                    baseUrl: 'https://${baseurl1}')),
-                              ).emergencyService();
+                              // BlocProvider(
+                              //   create: (context) => PostsCubit,
+                              //   child: EmergencyScreen(),
+                              // );
+                              // EmergencyService().emergencyService(1);
+                              // Navigator.push(
+                              //     context,
+                              //     new MaterialPageRoute(
+                              //         builder: (BuildContext context) =>
+                              //             new EmergencyScreen(
+                              //                 repository: PaginationRepository(
+                              //                     EmergencyService()))));
                               Navigator.push(
                                   context,
                                   new MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          new EmergencyScreen()));
+                                          new EmergencyScreen(emergency: t)));
                             },
                             child: Container(
                               height: 333,
@@ -200,104 +214,123 @@ class _DashBoardState extends State<DashBoardScreen> {
                               ),
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromRGBO(
-                                253,
-                                245,
-                                235,
-                                1,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new AlljobsScreen(emergency: t2)));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromRGBO(
+                                  253,
+                                  245,
+                                  235,
+                                  1,
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                //  WidgetSpan(
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Icon(
-                                  Icons.work_outlined,
-                                  size: 28,
-                                  color: Color.fromRGBO(248, 158, 22, 1),
-                                ),
-                                // ),
-                                Text(
-                                  t2,
-                                  style: TextStyle(
-                                    height: 1.2,
-                                    color: Color.fromRGBO(25, 44, 73, 1),
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Roboto',
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  //  WidgetSpan(
+                                  SizedBox(
+                                    height: 40,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: "All Jobs",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(25, 44, 73, 1),
-                                          fontSize: 16,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold))
-                                ]))
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromRGBO(
-                                238,
-                                238,
-                                251,
-                                1,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                //    WidgetSpan(
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Icon(
-                                  Icons.assignment_outlined,
-                                  size: 28,
-                                  color: Color.fromRGBO(85, 89, 223, 1),
-                                ),
-                                // ),
-                                Text(
-                                  t3,
-                                  style: TextStyle(
+                                  Icon(
+                                    Icons.work_outlined,
+                                    size: 28,
+                                    color: Color.fromRGBO(248, 158, 22, 1),
+                                  ),
+                                  // ),
+                                  Text(
+                                    t2,
+                                    style: TextStyle(
                                       height: 1.2,
                                       color: Color.fromRGBO(25, 44, 73, 1),
                                       fontSize: 48,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto'),
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: "All Jobs",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(25, 44, 73, 1),
+                                            fontSize: 16,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.bold))
+                                  ]))
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new AssignScreen(emergency: t3)));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromRGBO(
+                                  238,
+                                  238,
+                                  251,
+                                  1,
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: "Assigned To Me",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  //    WidgetSpan(
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                  Icon(
+                                    Icons.assignment_outlined,
+                                    size: 28,
+                                    color: Color.fromRGBO(85, 89, 223, 1),
+                                  ),
+                                  // ),
+                                  Text(
+                                    t3,
+                                    style: TextStyle(
+                                        height: 1.2,
                                         color: Color.fromRGBO(25, 44, 73, 1),
-                                        fontSize: 16,
-                                        fontFamily: 'Roboto',
-                                      ))
-                                ]))
-                              ],
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Roboto'),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: "Assigned To Me",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(25, 44, 73, 1),
+                                          fontSize: 16,
+                                          fontFamily: 'Roboto',
+                                        ))
+                                  ]))
+                                ],
+                              ),
                             ),
                           ),
 

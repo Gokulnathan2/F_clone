@@ -68,6 +68,16 @@ class LoginService {
       data: data,
     );
     print("response in loginservice: ${response}");
+    if (response.statusCode == 201) {
+      //accessToken = response.data;
+      //return true;
+
+    } else {
+      // refresh token is wrong
+      // accessToken = null;
+
+      //return false;
+    }
     return LoginResponseModel.fromJson(response.data);
   }
 
