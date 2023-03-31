@@ -169,7 +169,7 @@ class _AlljobsScreenPageState extends State<AlljobsScreenPage> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 50,
+                                width: 30,
                               ),
                               Container(
                                 height: 18,

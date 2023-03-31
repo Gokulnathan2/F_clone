@@ -46,11 +46,10 @@ class _NatificationScreenState extends State<NotificationScreen> {
         //title: const Text('AppBar Demo'),
         actions: <Widget>[],
       ),
-      body: const Center(
-        child: Text(
-          'This is the home page',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: Container(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }

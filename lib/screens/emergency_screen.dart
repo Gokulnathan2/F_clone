@@ -2509,7 +2509,7 @@ class _EmergencyScreenPageState extends State<EmergencyScreenPage> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 50,
+                                width: 30,
                               ),
                               Container(
                                 height: 18,

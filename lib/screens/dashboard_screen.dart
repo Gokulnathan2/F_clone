@@ -1,15 +1,19 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/cubit/pagination_cubit.dart';
+import 'package:gokul_f/layouts/alert_box.dart';
 import 'package:gokul_f/layouts/icon.dart';
+import 'package:gokul_f/layouts/stepper.dart';
 import 'package:gokul_f/repository/pagination_respository.dart';
 import 'package:gokul_f/screens/alljobs_screen.dart';
 import 'package:gokul_f/screens/assign_to_be_Screen.dart';
 import 'package:gokul_f/screens/emergency_screen.dart';
 import 'package:gokul_f/screens/job.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
+import 'package:gokul_f/screens/login/view/login_view.dart';
 import 'package:gokul_f/services/dashboard_services.dart';
 
 import '../model/dash_board_model.dart';
@@ -96,8 +100,17 @@ class _DashBoardState extends State<DashBoardScreen> {
               print("emergency: ${bal?.emergency}");
               print("jobs: ${bal?.all_jobs}");
               // //  }
+              AlertWithIcon();
               // await removeToken();
               await storage.deleteAll();
+              Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => LoginView(),
+                ),
+              );
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => LoginView()));
               // print('bal${bal}');
               // print(DashBoardResponseModel().emergency);
               ScaffoldMessenger.of(context).showSnackBar(
@@ -410,7 +423,7 @@ class _DashBoardState extends State<DashBoardScreen> {
     });
   }
 
-  onp() {
-    return Navigator.of(context).pushNamed('/jobScreen');
-  }
+  // onp() {
+  //   return Navigator.of(context).pushNamed('/jobScreen');
+  // }
 }

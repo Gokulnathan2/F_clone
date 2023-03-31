@@ -10,12 +10,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/model/login_response_model.dart';
 import 'package:gokul_f/services/login_services.dart';
 
-class EmergencyService {
+class AllJObService {
   static final storage = FlutterSecureStorage();
   static const FETCH_LIMIT = 20;
   // EmergencyService({required this.service});
 
-  Future<dynamic> emergencyService(int page) async {
+  Future<dynamic> allJobService(int page) async {
     try {
       dynamic token = await LoginService.getToken();
       // final dio = Dio();
@@ -32,7 +32,7 @@ class EmergencyService {
           validateStatus: validateStatus,
           headers: {"Authorization": "Bearer ${token}", "source": "android"});
       final response = await service.get(
-        '/v1/jobs/?filter=emergency&page=${page}',
+        '//v1/jobs/?filter=active&page=${page}',
         options: options,
       );
       print('tok $token');

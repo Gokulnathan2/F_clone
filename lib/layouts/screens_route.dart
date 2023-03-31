@@ -42,7 +42,7 @@ class ScreenRoute {
         // print("url om screen route: ${url.toString()}");
         return MaterialPageRoute(builder: (_) => CusBottomNavigation());
       case '/jobScreen':
-        return MaterialPageRoute(builder: (_) => const JobScreen());
+        return MaterialPageRoute(builder: (_) => JobScreen());
       // case '/emergencyScreen':
       //   return MaterialPageRoute(builder: (_) => EmergencyScreen());
 

@@ -132,6 +132,8 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                         itemCount: domains.length,
                         itemBuilder: (context, i, id) {
                           final isSelected = _selectedIndexs.contains(i);
+                          print(_selectedIndexs);
+                          print(isSelected);
                           //  final controller = PageController();
                           // int currentIndex = controller.page?.round() ?? 0;
                           print('v${id}');
@@ -146,12 +148,19 @@ class EnvironmentScreenState extends State<EnvironmentScreen> {
                             onTap: () {
                               setState(() {
                                 if (isSelected) {
+                                  print(isSelected == true);
                                   print('gdgg');
                                   _selectedIndexs.remove(i);
                                 } else {
                                   _selectedIndexs.add(i);
                                 }
                               });
+                              // setState(() {
+                              //   _selectedIndexs.remove(i);
+                              // });
+                              // setState(() {
+                              //   isSelected = true;
+                              // });
                               baseUrl(baseUrls);
 
                               print('es ${baseUrls}');

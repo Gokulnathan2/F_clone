@@ -43,11 +43,55 @@ class _MenuState extends State<MenuScreen> {
         //title: const Text('AppBar Demo'),
         actions: <Widget>[],
       ),
-      body: const Center(
-        child: Text(
-          'This is the home page',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: Column(
+        children: const [
+          ListTile(
+            title: Text(
+              'Photo Bank',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 1, 46, 83)),
+            ),
+            leading: Icon(
+              Icons.insert_photo_outlined,
+              color: Color.fromARGB(255, 1, 46, 83),
+            ),
+          ),
+          ListTile(
+            title: Text('Timesheet',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 1, 46, 83))),
+            leading: Icon(Icons.pending_actions_sharp,
+                color: Color.fromARGB(255, 1, 46, 83)),
+          ),
+          ListTile(
+            title: Text('Profile',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 1, 46, 83))),
+            leading: Icon(Icons.perm_contact_calendar_rounded,
+                color: Color.fromARGB(255, 1, 46, 83)),
+          ),
+          ListTile(
+            title: Text('Help Center',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 1, 46, 83))),
+            leading: Icon(Icons.headset_mic_rounded,
+                color: Color.fromARGB(255, 1, 46, 83)),
+          ),
+          ListTile(
+            title: Text(
+              'Settings',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 1, 46, 83)),
+            ),
+            leading:
+                Icon(Icons.settings, color: Color.fromARGB(255, 1, 46, 83)),
+          ),
+        ],
       ),
     );
   }

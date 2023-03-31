@@ -169,7 +169,7 @@ class _AssignScreenPageState extends State<AssignScreenPage> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 50,
+                                width: 30,
                               ),
                               Container(
                                 height: 18,

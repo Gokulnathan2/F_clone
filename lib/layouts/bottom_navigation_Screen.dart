@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gokul_f/cubit/bottomnav_cubit.dart';
+import 'package:gokul_f/cubit/singleselect.dart';
 import 'package:gokul_f/screens/More_Menu_Screen.dart';
 import 'package:gokul_f/screens/camera_screen.dart';
 import 'package:gokul_f/screens/chat_screen.dart';
@@ -18,7 +19,7 @@ class MyApp1 extends StatelessWidget {
       child: BottomNavigation(),
       providers: [
         BlocProvider(create: (context) => BottomnavcubitCubit()),
-        //BlocProvider(create: (context) => singleselect())
+        BlocProvider(create: (context) => singleselect())
       ],
     );
   }
