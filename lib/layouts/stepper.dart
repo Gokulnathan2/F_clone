@@ -193,7 +193,7 @@
 //       );
 //     }
 //   }
-//}
+// }
 // import 'package:drop_down_list/model/selected_list_item.dart';
 // import 'package:flutter/material.dart';
 // import 'package:gokul_f/screens/job.dart';
@@ -660,7 +660,6 @@
 // }
 // import 'package:flutter/material.dart';
 
-
 // class CreateJobsScreen extends StatefulWidget {
 //   const CreateJobsScreen({super.key});
 
@@ -899,3 +898,134 @@
 //             content: Container()),
 //       ];
 // }
+import 'package:flutter/material.dart';
+import 'package:gokul_f/screens/job.dart';
+import 'package:gokul_f/screens/login/view/job2.dart';
+
+class MyStepper extends StatefulWidget {
+  const MyStepper({Key? key}) : super(key: key);
+
+  @override
+  State<MyStepper> createState() => _MyStepperState();
+}
+
+class _MyStepperState extends State<MyStepper> {
+  int currentStep = 0;
+  continueStep() {
+    if (currentStep < 2) {
+      setState(() {
+        currentStep = currentStep + 1; //currentStep+=1;
+      });
+    }
+  }
+
+  cancelStep() {
+    if (currentStep > 0) {
+      setState(() {
+        currentStep = currentStep - 1; //currentStep-=1;
+      });
+    }
+  }
+
+  onStepTapped(int value) {
+    setState(() {
+      currentStep = value;
+    });
+  }
+
+  Widget controlBuilders(context, details) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          ElevatedButton(
+            onPressed: details.onStepContinue,
+            child: const Text(
+              'Next',
+              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 222, 105, 70),
+              textStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          // ElevatedButton(
+          //   onPressed: details.onStepContinue,
+          //   child: const Text('Next'),
+          // ),
+          const SizedBox(width: 10),
+          OutlinedButton(
+            onPressed: details.onStepCancel,
+            child: const Text('Back'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 4, 31, 68),
+          title: const Text(
+            'Create Job Request',
+          ),
+          leading: (Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                // child: Positioned(
+                //child: AppBar(
+
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                //   backgroundColor: Colors.transparent,
+                //   elevation: 0.0,
+                // ),
+                // ),
+              ),
+            ],
+          ))),
+      body: Stepper(
+        elevation: 0, //Horizontal Impact
+        // margin: const EdgeInsets.all(20), //vertical impact
+        controlsBuilder: controlBuilders,
+        type: StepperType.horizontal,
+        physics: const ScrollPhysics(),
+        onStepTapped: onStepTapped,
+        onStepContinue: continueStep,
+        onStepCancel: cancelStep,
+        currentStep: currentStep, //0, 1, 2
+        steps: [
+          Step(
+              title: const Text('Step 1'),
+              content: JobScreenState().mainBody(),
+              isActive: currentStep >= 0,
+              state:
+                  currentStep >= 0 ? StepState.complete : StepState.disabled),
+          Step(
+            title: const Text('Step 2'),
+            content: JobScreen1State().mainBody(),
+            isActive: currentStep >= 0,
+            state: currentStep >= 1 ? StepState.complete : StepState.disabled,
+          ),
+          Step(
+            title: const Text('Step 3'),
+            content: const Text('This is the Third step.'),
+            isActive: currentStep >= 0,
+            state: currentStep >= 2 ? StepState.complete : StepState.disabled,
+          ),
+        ],
+      ),
+    );
+  }
+}

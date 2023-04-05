@@ -381,7 +381,7 @@ class _DashBoardState extends State<DashBoardScreen> {
                               context,
                               new MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      new JobScreen()));
+                                      new MyStepper()));
                         },
                         style: ButtonStyle(
                           // alignment: Alignment(-3, 2),

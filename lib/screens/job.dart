@@ -278,12 +278,18 @@
 //     );
 //   }
 // }
-import 'package:drop_down_list/drop_down_list.dart';
-import 'package:drop_down_list/model/selected_list_item.dart';
+//import 'package:drop_down_list/drop_down_list.dart';
+//import 'package:drop_down_list/model/selected_list_item.dart';
+//import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:gokul_f/layouts/drop_down.dart';
 import 'package:gokul_f/layouts/stepper.dart';
+import 'package:gokul_f/model/service_model.dart';
 import 'package:gokul_f/screens/login/view/job2.dart';
 import 'package:gokul_f/services/create_job_service.dart';
+import 'package:gokul_f/layouts/constants.dart';
+
+import '../model/selected_type.dart';
 
 //import 'constants.dart';
 
@@ -298,6 +304,36 @@ class JobScreen extends StatefulWidget {
 
 class JobScreenState extends State<JobScreen> {
   dynamic cj;
+  ServiceType? ser;
+
+  /// This is list of city which will pass to the drop down.
+  /// final List<SelectedListItem> _listOfCities = [
+//     SelectedListItem(
+//       name: kTokyo,
+//       value: "TYO",
+//       isSelected: false,
+//     ),
+//     SelectedListItem(
+//       name: kNewYork,
+//       value: "NY",
+//       isSelected: false,
+//     ),
+//     SelectedListItem(
+//       name: kLondon,
+//       value: "LDN",
+//       isSelected: false,
+//     ),
+//     SelectedListItem(name: kParis),
+//     SelectedListItem(name: kMadrid),
+//     SelectedListItem(name: kDubai),
+//     SelectedListItem(name: kRome),
+//     SelectedListItem(name: kBarcelona),
+//     SelectedListItem(name: kCologne),
+//     SelectedListItem(name: kMonteCarlo),
+//     SelectedListItem(name: kPuebla),
+//     SelectedListItem(name: kFlorence),
+//   ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -308,97 +344,43 @@ class JobScreenState extends State<JobScreen> {
   void _getData() async {
     cj = (await CreateJobService().createJobService());
     Future.delayed(const Duration(seconds: 0)).then((value) => setState(
-          () {},
+          () {
+            //cj['name'] = _listOfCities;
+          },
         ));
     print('hi');
-    print(cj['id']);
+    print(cj[0]['name'].toString());
+    print(ser?.name);
     print("welcome");
   }
 
-  /// This is list of city which will pass to the drop down.
-  final List<SelectedListItem> _listOfCities = [
-    SelectedListItem(
-      name: 'kTokyo',
-      value: "TYO",
-      isSelected: false,
-    ),
-    SelectedListItem(
-      name: 'kNewYork',
-      value: "NY",
-      isSelected: false,
-    ),
-    SelectedListItem(
-      name: 'kLondon',
-      value: "LDN",
-      isSelected: false,
-    ),
-    SelectedListItem(name: 'kParis'),
-    SelectedListItem(name: 'kMadrid'),
-    SelectedListItem(name: 'kDubai'),
-    SelectedListItem(name: 'kRome'),
-    SelectedListItem(name: 'kBarcelona'),
-    SelectedListItem(name: 'kCologne'),
-    SelectedListItem(name: 'kMonteCarlo'),
-    SelectedListItem(name: 'kPuebla'),
-    SelectedListItem(name: 'kFlorence'),
-  ];
-
   /// This is register text field controllers.
-  final TextEditingController _fullNameTextEditingController =
+  final TextEditingController _servicetypeTextEditingController =
       TextEditingController();
-  final TextEditingController _emailTextEditingController =
+  final TextEditingController _properyTextEditingController =
       TextEditingController();
-  final TextEditingController _phoneNumberTextEditingController =
+  final TextEditingController _locationTextEditingController =
       TextEditingController();
-  final TextEditingController _cityTextEditingController =
+  final TextEditingController _descripitionTextEditingController =
       TextEditingController();
-  final TextEditingController _passwordTextEditingController =
+  final TextEditingController _detailedDescripitionTextEditingController =
       TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    _fullNameTextEditingController.dispose();
-    _emailTextEditingController.dispose();
-    _phoneNumberTextEditingController.dispose();
-    _cityTextEditingController.dispose();
-    _passwordTextEditingController.dispose();
+    _servicetypeTextEditingController.dispose();
+    _properyTextEditingController.dispose();
+    _locationTextEditingController.dispose();
+    _descripitionTextEditingController.dispose();
+    _detailedDescripitionTextEditingController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 4, 31, 68),
-          title: const Text(
-            'Create Job Request',
-          ),
-          leading: (Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                // child: Positioned(
-                //child: AppBar(
-
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ),
-                //   backgroundColor: Colors.transparent,
-                //   elevation: 0.0,
-                // ),
-                // ),
-              ),
-            ],
-          ))),
-      body: SafeArea(
-        child: mainBody(),
-      ),
+      body: SafeArea(child: mainBody()),
     );
   }
 
@@ -421,25 +403,21 @@ class JobScreenState extends State<JobScreen> {
           // ),
           // const SizedBox(
           //   height: 15.0,
-          // ),
-          GestureDetector(
-            onTap: () {
-              CreateJobService().createJobService();
-            },
-            child: AppTextField(
-              textEditingController: _cityTextEditingController,
-              title: 'Service Type',
-              hint: 'Select',
-              isCitySelected: true,
-              cities: _listOfCities,
-            ),
-          ),
+
           AppTextField(
-            textEditingController: _cityTextEditingController,
+            textEditingController: _servicetypeTextEditingController,
+            title: 'Service Type',
+            hint: 'Select',
+            isCitySelected: true,
+            //cities: _listOfCities,
+          ),
+
+          AppTextField1(
+            textEditingController: _properyTextEditingController,
             title: 'Property',
             hint: 'Select',
             isCitySelected: true,
-            cities: _listOfCities,
+            //cities: _listOfCities,
           ),
           // AppTextField(
           //   textEditingController:  _cityTextEditingController,
@@ -449,20 +427,20 @@ class JobScreenState extends State<JobScreen> {
           //   cities: _listOfCities,
           // ),
           AppTextField(
-            textEditingController: _cityTextEditingController,
+            textEditingController: _locationTextEditingController,
             title: 'Location',
             hint: 'Select tenant & unit',
             isCitySelected: true,
-            cities: _listOfCities,
+            //cities: _listOfCities,
           ),
           AppTextField(
-            textEditingController: _passwordTextEditingController,
+            textEditingController: _descripitionTextEditingController,
             title: 'Brief Descripition',
             hint: 'Description',
             isCitySelected: false,
           ),
           AppTextField(
-            textEditingController: _passwordTextEditingController,
+            textEditingController: _detailedDescripitionTextEditingController,
             title: 'Detailed Descripition',
             hint: 'Description',
             isCitySelected: false,
@@ -470,7 +448,7 @@ class JobScreenState extends State<JobScreen> {
           // const SizedBox(
           //   height: 15.0,
           // ),
-          _AppElevatedButton(),
+          //  _AppElevatedButton(),
         ],
       ),
     );
@@ -483,14 +461,14 @@ class AppTextField extends StatefulWidget {
   final String title;
   final String hint;
   final bool isCitySelected;
-  final List<SelectedListItem>? cities;
+  //final List<SelectedListItem>? cities;
 
   const AppTextField({
     required this.textEditingController,
     required this.title,
     required this.hint,
     required this.isCitySelected,
-    this.cities,
+    // this.cities,
     Key? key,
   }) : super(key: key);
 
@@ -501,13 +479,82 @@ class AppTextField extends StatefulWidget {
 class _AppTextFieldState extends State<AppTextField> {
   final TextEditingController _searchTextEditingController =
       TextEditingController();
+  late List<dynamic> service;
+  ServiceType? ser;
+  List<dynamic> _listOfCities = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+    // _getData1();
+  }
+
+  void _getData() async {
+    service = (await CreateJobService().createJobService());
+    print(service);
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(
+          () {
+            // service = _listOfCities;
+            //service[0]['name'] = _listOfCities;
+            //service[0]['name'] = _listOfCities[0].name;
+          },
+        ));
+    print('hi');
+
+    print(service[0]['name']);
+    print(ser);
+    print(_listOfCities);
+    // print("welcome${ser?.name}");
+    // print(_listOfCities[0].name);
+  }
+
+  // void _getData1() async {
+  //   service = (await CreateJobService().properties());
+  //   print(service);
+  //   Future.delayed(const Duration(seconds: 0)).then((value) => setState(
+  //         () {
+  //           // service = _listOfCities;
+  //           //service[0]['name'] = _listOfCities;
+  //           //service[0]['name'] = _listOfCities[0].name;
+  //         },
+  //       ));
+  //   print('hi');
+
+  //   print(service[0]['name']);
+  //   print(ser);
+  //   print(_listOfCities);
+  //   // print("welcome${ser?.name}");
+  //   // print(_listOfCities[0].name);
+  // }
+  // void _getData2() async {
+  //   service = (await CreateJobService().properties());
+  //   print(service);
+  //   Future.delayed(const Duration(seconds: 0)).then((value) => setState(
+  //         () {
+  //           // service = _listOfCities;
+  //           //service[0]['name'] = _listOfCities;
+  //           //service[0]['name'] = _listOfCities[0].name;
+  //         },
+  //       ));
+  //   print('hi');
+
+  //   print(service[0]['name']);
+  //   print(ser);
+  //   print(_listOfCities);
+  //   // print("welcome${ser?.name}");
+  //   // print(_listOfCities[0].name);
+  // }
+  // List<ServiceType> _listOfCities = [
+  //   // ServiceType(id:  , name: name, isDefault: isDefault, isPrimary: isPrimary)
+  // ];
 
   /// This is on text changed method which will display on city text field on changed.
   void onTextFieldTap() {
     DropDownState(
       DropDown(
-        bottomSheetTitle: const Text(
-          'kCities',
+        bottomSheetTitle: Text(
+          'Service${service[0]['name'].toString()}',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
@@ -520,12 +567,13 @@ class _AppTextFieldState extends State<AppTextField> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        data: widget.cities ?? [],
+        data: service,
         selectedItems: (List<dynamic> selectedList) {
           List<String> list = [];
           for (var item in selectedList) {
-            if (item is SelectedListItem) {
-              list.add(item.name);
+            if (item is dynamic) {
+              list.add(item['name']);
+              print(list);
             }
           }
           showSnackBar(list.toString());
@@ -556,7 +604,8 @@ class _AppTextFieldState extends State<AppTextField> {
               ? () {
                   FocusScope.of(context).unfocus();
                   onTextFieldTap();
-                  CreateJobService().createJobService();
+
+                  //CreateJobService().createJobService();
                 }
               : null,
           decoration: InputDecoration(
@@ -565,6 +614,12 @@ class _AppTextFieldState extends State<AppTextField> {
             contentPadding:
                 const EdgeInsets.only(left: 8, bottom: 0, top: 0, right: 15),
             hintText: widget.hint,
+            // icon: Align(
+            //   child: Icon(
+            //     Icons.keyboard_arrow_down_sharp,
+            //     size: 24,
+            //   ),
+            // ),
             border: const OutlineInputBorder(
               borderSide: BorderSide(
                 width: 0,
@@ -575,12 +630,202 @@ class _AppTextFieldState extends State<AppTextField> {
               ),
             ),
           ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Enter email id";
+            } else {
+              return "Enter valid email";
+            }
+          },
         ),
         const SizedBox(
           height: 12.0,
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.textEditingController.dispose();
+  }
+}
+
+class AppTextField1 extends StatefulWidget {
+  final TextEditingController textEditingController;
+  final String title;
+  final String hint;
+  final bool isCitySelected;
+  //final List<SelectedListItem>? cities;
+
+  const AppTextField1({
+    required this.textEditingController,
+    required this.title,
+    required this.hint,
+    required this.isCitySelected,
+    // this.cities,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _AppTextFieldState1 createState() => _AppTextFieldState1();
+}
+
+class _AppTextFieldState1 extends State<AppTextField1> {
+  final TextEditingController _searchTextEditingController =
+      TextEditingController();
+  late List<dynamic> service;
+  ServiceType? ser;
+  List<dynamic> _listOfCities = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _getData1();
+  }
+
+  void _getData1() async {
+    service = (await CreateJobService().properties());
+    print(service);
+    Future.delayed(const Duration(seconds: 0)).then((value) => setState(
+          () {
+            // service = _listOfCities;
+            //service[0]['name'] = _listOfCities;
+            //service[0]['name'] = _listOfCities[0].name;
+          },
+        ));
+    print('hi');
+
+    print(service[0]['name']);
+    print(ser);
+    print(_listOfCities);
+    // print("welcome${ser?.name}");
+    // print(_listOfCities[0].name);
+  }
+  // void _getData2() async {
+  //   service = (await CreateJobService().properties());
+  //   print(service);
+  //   Future.delayed(const Duration(seconds: 0)).then((value) => setState(
+  //         () {
+  //           // service = _listOfCities;
+  //           //service[0]['name'] = _listOfCities;
+  //           //service[0]['name'] = _listOfCities[0].name;
+  //         },
+  //       ));
+  //   print('hi');
+
+  //   print(service[0]['name']);
+  //   print(ser);
+  //   print(_listOfCities);
+  //   // print("welcome${ser?.name}");
+  //   // print(_listOfCities[0].name);
+  // }
+  // List<ServiceType> _listOfCities = [
+  //   // ServiceType(id:  , name: name, isDefault: isDefault, isPrimary: isPrimary)
+  // ];
+
+  /// This is on text changed method which will display on city text field on changed.
+  void onTextFieldTap() {
+    DropDownState(
+      DropDown(
+        bottomSheetTitle: Text(
+          'Service${service[0]['name'].toString()}',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
+        ),
+        submitButtonChild: const Text(
+          'Done',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        data: service,
+        selectedItems: (List<dynamic> selectedList) {
+          List<String> list = [];
+          for (var item in selectedList) {
+            if (item is dynamic) {
+              list.add(item['name']);
+              print(list);
+            }
+          }
+          showSnackBar(list.toString());
+        },
+        //enableMultipleSelection: true,
+      ),
+    ).showModal(context);
+  }
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.title),
+        const SizedBox(
+          height: 5.0,
+        ),
+        TextFormField(
+          controller: widget.textEditingController,
+          cursorColor: Colors.black,
+          onTap: widget.isCitySelected
+              ? () {
+                  FocusScope.of(context).unfocus();
+                  onTextFieldTap();
+
+                  //CreateJobService().createJobService();
+                }
+              : null,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.black12,
+            contentPadding:
+                const EdgeInsets.only(left: 8, bottom: 0, top: 0, right: 15),
+            hintText: widget.hint,
+            // icon: Align(
+            //   child: Icon(
+            //     Icons.keyboard_arrow_down_sharp,
+            //     size: 24,
+            //   ),
+            // ),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),
+            ),
+          ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Enter email id";
+            } else {
+              return "Enter valid email";
+            }
+          },
+        ),
+        const SizedBox(
+          height: 12.0,
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.textEditingController.dispose();
   }
 }
 

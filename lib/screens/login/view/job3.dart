@@ -1,7 +1,10 @@
-import 'package:drop_down_list/drop_down_list.dart';
-import 'package:drop_down_list/model/selected_list_item.dart';
+// import 'package:drop_down_list/drop_down_list.dart';
+// import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:gokul_f/layouts/drop_down.dart';
 import 'package:gokul_f/layouts/stepper.dart';
+import 'package:gokul_f/model/selected_type.dart';
+import 'package:gokul_f/model/service_model.dart';
 
 //import 'constants.dart';
 
@@ -16,31 +19,31 @@ class JobScreen2 extends StatefulWidget {
 
 class JobScreen2State extends State<JobScreen2> {
   /// This is list of city which will pass to the drop down.
-  final List<SelectedListItem> _listOfCities = [
-    SelectedListItem(
-      name: 'kTokyo',
-      value: "TYO",
-      isSelected: false,
-    ),
-    SelectedListItem(
-      name: 'kNewYork',
-      value: "NY",
-      isSelected: false,
-    ),
-    SelectedListItem(
-      name: 'kLondon',
-      value: "LDN",
-      isSelected: false,
-    ),
-    SelectedListItem(name: 'kParis'),
-    SelectedListItem(name: 'kMadrid'),
-    SelectedListItem(name: 'kDubai'),
-    SelectedListItem(name: 'kRome'),
-    SelectedListItem(name: 'kBarcelona'),
-    SelectedListItem(name: 'kCologne'),
-    SelectedListItem(name: 'kMonteCarlo'),
-    SelectedListItem(name: 'kPuebla'),
-    SelectedListItem(name: 'kFlorence'),
+  final List<ServiceType> _listOfCities = [
+    // SelectedListItem(
+    //   name: 'kTokyo',
+    //   value: "TYO",
+    //   isSelected: false,
+    // ),
+    // SelectedListItem(
+    //   name: 'kNewYork',
+    //   value: "NY",
+    //   isSelected: false,
+    // ),
+    // SelectedListItem(
+    //   name: 'kLondon',
+    //   value: "LDN",
+    //   isSelected: false,
+    // ),
+    // SelectedListItem(name: 'kParis'),
+    // SelectedListItem(name: 'kMadrid'),
+    // SelectedListItem(name: 'kDubai'),
+    // SelectedListItem(name: 'kRome'),
+    // SelectedListItem(name: 'kBarcelona'),
+    // SelectedListItem(name: 'kCologne'),
+    // SelectedListItem(name: 'kMonteCarlo'),
+    // SelectedListItem(name: 'kPuebla'),
+    // SelectedListItem(name: 'kFlorence'),
   ];
 
   /// This is register text field controllers.
@@ -172,7 +175,7 @@ class AppTextField extends StatefulWidget {
   final String title;
   final String hint;
   final bool isCitySelected;
-  final List<SelectedListItem>? cities;
+  final List<ServiceType>? cities;
 
   const AppTextField({
     required this.textEditingController,
