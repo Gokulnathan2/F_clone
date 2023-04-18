@@ -100,7 +100,7 @@ class _DashBoardState extends State<DashBoardScreen> {
               print("emergency: ${bal?.emergency}");
               print("jobs: ${bal?.all_jobs}");
               // //  }
-              AlertWithIcon();
+              //  AlertWithIcon();
               // await removeToken();
               await storage.deleteAll();
               Navigator.pushReplacement(
@@ -379,9 +379,12 @@ class _DashBoardState extends State<DashBoardScreen> {
                         onPressed: () {
                           Navigator.push(
                               context,
-                              new MaterialPageRoute(
+                              MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      new MyStepper()));
+                                      MyStepper()));
+                          // Navigator.of(context).pushReplacementNamed(
+                          //   '/myStepper',
+                          // );
                         },
                         style: ButtonStyle(
                           // alignment: Alignment(-3, 2),

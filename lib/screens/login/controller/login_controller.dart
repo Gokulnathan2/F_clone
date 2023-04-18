@@ -25,9 +25,6 @@ class LoginCubit extends Cubit<LoginState> {
     final model = LoginModel(
       email: emailController.text,
       password: passwordController.text,
-      // category: null,
-      // types: null,
-      // domains: null,
     );
 
     final response = await service.loginService(model);

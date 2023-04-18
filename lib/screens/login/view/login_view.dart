@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gokul_f/core/constants/api.dart';
+import 'package:gokul_f/layouts/alert_box.dart';
 import 'package:gokul_f/layouts/icon.dart';
 import 'package:gokul_f/model/login_response_model.dart';
 import 'package:gokul_f/screens/login/environment_screen.dart';
@@ -105,6 +106,7 @@ class _LoginViewState extends State<LoginView> {
       if (data.error != null) {
         print('derr${data.error}');
         print('gogo');
+        // ReuseAlertDialogBox().alertDialog(context, "Alert", data.error!);
         buildSnackBar(context, data.error!);
       } else {
         //  print('derr${data}');

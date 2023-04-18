@@ -19,32 +19,7 @@ class JobScreen2 extends StatefulWidget {
 
 class JobScreen2State extends State<JobScreen2> {
   /// This is list of city which will pass to the drop down.
-  final List<ServiceType> _listOfCities = [
-    // SelectedListItem(
-    //   name: 'kTokyo',
-    //   value: "TYO",
-    //   isSelected: false,
-    // ),
-    // SelectedListItem(
-    //   name: 'kNewYork',
-    //   value: "NY",
-    //   isSelected: false,
-    // ),
-    // SelectedListItem(
-    //   name: 'kLondon',
-    //   value: "LDN",
-    //   isSelected: false,
-    // ),
-    // SelectedListItem(name: 'kParis'),
-    // SelectedListItem(name: 'kMadrid'),
-    // SelectedListItem(name: 'kDubai'),
-    // SelectedListItem(name: 'kRome'),
-    // SelectedListItem(name: 'kBarcelona'),
-    // SelectedListItem(name: 'kCologne'),
-    // SelectedListItem(name: 'kMonteCarlo'),
-    // SelectedListItem(name: 'kPuebla'),
-    // SelectedListItem(name: 'kFlorence'),
-  ];
+  final List<ServiceType> _listOfCities = [];
 
   /// This is register text field controllers.
   final TextEditingController _fullNameTextEditingController =
@@ -197,7 +172,7 @@ class _AppTextFieldState extends State<AppTextField> {
   /// This is on text changed method which will display on city text field on changed.
   void onTextFieldTap() {
     DropDownState(
-      DropDown(
+      DropDownCopy(
         bottomSheetTitle: const Text(
           'kCities',
           style: TextStyle(

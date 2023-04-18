@@ -899,6 +899,7 @@
 //       ];
 // }
 import 'package:flutter/material.dart';
+import 'package:gokul_f/layouts/try_nd_error.dart';
 import 'package:gokul_f/screens/job.dart';
 import 'package:gokul_f/screens/login/view/job2.dart';
 
@@ -934,31 +935,53 @@ class _MyStepperState extends State<MyStepper> {
   }
 
   Widget controlBuilders(context, details) {
+    //final isLastStep = currentStep == .length - 1;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
         children: [
-          ElevatedButton(
-            onPressed: details.onStepContinue,
-            child: const Text(
-              'Next',
-              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+          if (currentStep != 0)
+            ElevatedButton(
+              onPressed: details.onStepContinue,
+              // child: Text(isLastStep ? 'CONFIRM' : 'NEXT'),
+              child: const Text(
+                'Next',
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 230, 81, 0),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 222, 105, 70),
-              textStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+
+          if (currentStep == 0)
+            Expanded(
+              child: ElevatedButton(
+                onPressed: details.onStepContinue,
+                // child: Text(isLastStep ? 'CONFIRM' : 'NEXT'),
+                child: const Text(
+                  'Next',
+                  style:
+                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 230, 81, 0),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
-          ),
           // ElevatedButton(
           //   onPressed: details.onStepContinue,
           //   child: const Text('Next'),
           // ),
           const SizedBox(width: 10),
-          OutlinedButton(
-            onPressed: details.onStepCancel,
-            child: const Text('Back'),
-          ),
+          if (currentStep != 0)
+            OutlinedButton(
+              onPressed: details.onStepCancel,
+              child: const Text('Back'),
+            ),
         ],
       ),
     );
@@ -982,6 +1005,7 @@ class _MyStepperState extends State<MyStepper> {
 
                 child: IconButton(
                   onPressed: () => Navigator.of(context).pop(),
+                  //  onPressed: onStepCancel,
                   icon: Icon(
                     Icons.arrow_back,
                     color: Colors.white,
@@ -995,36 +1019,44 @@ class _MyStepperState extends State<MyStepper> {
               ),
             ],
           ))),
-      body: Stepper(
-        elevation: 0, //Horizontal Impact
-        // margin: const EdgeInsets.all(20), //vertical impact
-        controlsBuilder: controlBuilders,
-        type: StepperType.horizontal,
-        physics: const ScrollPhysics(),
-        onStepTapped: onStepTapped,
-        onStepContinue: continueStep,
-        onStepCancel: cancelStep,
-        currentStep: currentStep, //0, 1, 2
-        steps: [
-          Step(
-              title: const Text('Step 1'),
-              content: JobScreenState().mainBody(),
+      body: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme:
+              const ColorScheme.light(primary: Color.fromARGB(255, 230, 81, 0)),
+          iconTheme: Theme.of(context).iconTheme.copyWith(size: 32.0),
+        ),
+        child: Stepper(
+          elevation: 0, //Horizontal Impact
+          // margin: const EdgeInsets.all(20), //vertical impact
+          controlsBuilder: controlBuilders,
+          type: StepperType.horizontal,
+          physics: const ScrollPhysics(),
+          onStepTapped: onStepTapped,
+          onStepContinue: continueStep,
+          onStepCancel: cancelStep,
+          currentStep: currentStep, //0, 1, 2
+          steps: [
+            Step(
+                title: const Text(''),
+                content: JobScreenState().mainBody(),
+                isActive: currentStep >= 0,
+                state:
+                    currentStep >= 0 ? StepState.complete : StepState.disabled),
+            Step(
+              title: const Text(''),
+              content: JobScreen2(),
               isActive: currentStep >= 0,
-              state:
-                  currentStep >= 0 ? StepState.complete : StepState.disabled),
-          Step(
-            title: const Text('Step 2'),
-            content: JobScreen1State().mainBody(),
-            isActive: currentStep >= 0,
-            state: currentStep >= 1 ? StepState.complete : StepState.disabled,
-          ),
-          Step(
-            title: const Text('Step 3'),
-            content: const Text('This is the Third step.'),
-            isActive: currentStep >= 0,
-            state: currentStep >= 2 ? StepState.complete : StepState.disabled,
-          ),
-        ],
+              state: currentStep >= 1 ? StepState.complete : StepState.disabled,
+            ),
+            Step(
+              title: const Text(''),
+              //  content: Text('sab'),
+              content: CalendarTextFormField(),
+              isActive: currentStep >= 0,
+              state: currentStep >= 2 ? StepState.complete : StepState.disabled,
+            ),
+          ],
+        ),
       ),
     );
   }

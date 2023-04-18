@@ -1,14 +1,14 @@
+// import 'package:drop_down_list/drop_down_list.dart';
 import 'package:flutter/material.dart';
 
 import 'drop_down.dart';
 
 /// This is search text field class.
 class AppTextField extends StatefulWidget {
-  final DropDown dropDown;
+  final DropDownCopy? dropDown;
   final Function(String) onTextChanged;
 
-  const AppTextField(
-      {required this.dropDown, required this.onTextChanged, Key? key})
+  const AppTextField({this.dropDown, required this.onTextChanged, Key? key})
       : super(key: key);
 
   @override

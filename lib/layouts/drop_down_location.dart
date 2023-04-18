@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gokul_f/model/Location.dart';
 import 'package:gokul_f/model/selected_type.dart';
 import 'package:gokul_f/model/service_model.dart';
 
@@ -6,9 +7,9 @@ import 'package:gokul_f/model/service_model.dart';
 import 'app_text.dart';
 //import 'app_text_field.dart';
 
-class DropDownCopy {
+class DropDownLocation {
   /// This will give the list of data.
-  final List<dynamic> data;
+  final List<dynamic>? data;
 
   /// This will give the call back to the selected items from list.
   final Function(List<dynamic>)? selectedItems;
@@ -36,7 +37,7 @@ class DropDownCopy {
   /// This will set the background color to the dropdown.
   final Color dropDownBackgroundColor;
 
-  DropDownCopy({
+  DropDownLocation({
     Key? key,
     required this.data,
     this.selectedItems,
@@ -50,10 +51,10 @@ class DropDownCopy {
   });
 }
 
-class DropDownState {
-  DropDownCopy dropDown;
+class DropDownLocationState {
+  DropDownLocation dropDown;
 
-  DropDownState(this.dropDown);
+  DropDownLocationState(this.dropDown);
 
   /// This gives the bottom sheet widget.
   void showModal(context) {
@@ -76,7 +77,7 @@ class DropDownState {
 
 /// This is main class to display the bottom sheet body.
 class MainBody extends StatefulWidget {
-  final DropDownCopy dropDown;
+  final DropDownLocation dropDown;
 
   const MainBody({required this.dropDown, Key? key}) : super(key: key);
 
@@ -86,7 +87,7 @@ class MainBody extends StatefulWidget {
 
 class _MainBodyState extends State<MainBody> {
   /// This list will set when the list of data is not available.
-  List<dynamic> mainList = [];
+  List<dynamic>? mainList = [];
 
   @override
   void initState() {
@@ -123,9 +124,9 @@ class _MainBodyState extends State<MainBody> {
                       child: Material(
                         child: ElevatedButton(
                           onPressed: () {
-                            List<dynamic> selectedList = widget.dropDown.data
-                                .where(
-                                    (element) => element['is_primary'] == true)
+                            List<dynamic> selectedList = widget.dropDown.data!
+                                .where((element) =>
+                                    element['address'] ?? '1' == true)
                                 .toList();
                             List<dynamic> selectedNameList = [];
 
@@ -152,7 +153,7 @@ class _MainBodyState extends State<MainBody> {
               visible: widget.dropDown.isSearchVisible,
               child: widget.dropDown.searchWidget ??
                   AppTextField(
-                    dropDown: widget.dropDown,
+                    // dropDown: widget.dropDown??{} ,
                     onTextChanged: _buildSearchList,
                   ),
             ),
@@ -161,9 +162,11 @@ class _MainBodyState extends State<MainBody> {
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
-                itemCount: mainList.length,
+                itemCount: mainList?.length,
                 itemBuilder: (context, index) {
-                  bool isSelected = mainList[index]['is_primary'] ?? false;
+                  bool isSelected = mainList?[index]['units'][index]['tenant']
+                          ['onboarded'] ??
+                      false;
                   return InkWell(
                     child: Container(
                       color: widget.dropDown.dropDownBackgroundColor,
@@ -172,14 +175,14 @@ class _MainBodyState extends State<MainBody> {
                         child: ListTile(
                           title: widget.dropDown.listBuilder?.call(index) ??
                               Text(
-                                mainList[index]['name'],
+                                mainList?[index]['address'] ?? '2',
                               ),
                           trailing: widget.dropDown.enableMultipleSelection
                               ? GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      mainList[index]['is_primary'] =
-                                          !isSelected;
+                                      mainList?[index]['units'][index]['tenant']
+                                          ['onboarded'] = !isSelected;
                                     });
                                   },
                                   child: isSelected
@@ -198,7 +201,7 @@ class _MainBodyState extends State<MainBody> {
                         ? null
                         : () {
                             widget.dropDown.selectedItems
-                                ?.call([mainList[index]]);
+                                ?.call([mainList?[index]]);
                             _onUnFocusKeyboardAndPop();
                           },
                   );
@@ -214,7 +217,7 @@ class _MainBodyState extends State<MainBody> {
   /// This helps when search enabled & show the filtered data in list.
   _buildSearchList(String userSearchTerm) {
     final results = widget.dropDown.data
-        .where((element) => element['name']
+        ?.where((element) => element.address
             .toLowerCase()
             .contains(userSearchTerm.toLowerCase()))
         .toList();
@@ -233,6 +236,7 @@ class _MainBodyState extends State<MainBody> {
   }
 
   void _setSearchWidgetListener() {
+    print('ml${widget.dropDown.data}');
     TextFormField? _searchField =
         (widget.dropDown.searchWidget as TextFormField?);
     _searchField?.controller?.addListener(() {
