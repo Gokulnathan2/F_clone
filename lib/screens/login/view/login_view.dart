@@ -1,28 +1,21 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:gokul_f/core/constants/api.dart';
-import 'package:gokul_f/layouts/alert_box.dart';
+
 import 'package:gokul_f/layouts/icon.dart';
 import 'package:gokul_f/model/login_response_model.dart';
-import 'package:gokul_f/screens/login/environment_screen.dart';
 
-import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
 import '../../../services/login_services.dart';
 
-import '../../../services/network_handler.dart';
 import '../controller/login_controller.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView({Key? key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -36,7 +29,6 @@ class _LoginViewState extends State<LoginView> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
-  static final storage = FlutterSecureStorage();
   @override
   void initState() {
     // authBloc = BlocProvider.of<AuthBloc>(context);
@@ -102,10 +94,10 @@ class _LoginViewState extends State<LoginView> {
   void buildBlocListener(context, state) {
     if (state is LoginCompleted) {
       final data = state.loginModel;
-      print(data);
+
       if (data.error != null) {
         print('derr${data.error}');
-        print('gogo');
+
         // ReuseAlertDialogBox().alertDialog(context, "Alert", data.error!);
         buildSnackBar(context, data.error!);
       } else {
@@ -284,7 +276,7 @@ class _LoginViewState extends State<LoginView> {
             bool emailValid =
                 RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                     .hasMatch(value!);
-            if (value!.isEmpty) {
+            if (value.isEmpty) {
               return "Enter email id";
             } else if (!emailValid) {
               return "Enter valid email";

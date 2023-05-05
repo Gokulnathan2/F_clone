@@ -7,13 +7,13 @@
 
 //   LocationRepository(this.service);
 
-//   Future<LoctaionServiceType> fetchPosts(String id) async {
-//     final  dataResults = await service.location(id);
-//     final  jsonData = dataResults;
+//   Future<LoctaionServiceType> fetchPosts(id) async {
+//     final dataResults = await service.location(id);
+//     final jsonData = LoctaionServiceType.fromJson(dataResults);
 //     print('dr${dataResults}');
-//      print('type of results: ${jsonData.runtimeType}');
+//     print('type of results: ${jsonData.runtimeType}');
 //     //return results;
-//     return jsonData[0]['unit']  ;
+//     return jsonData;
 //     // return posts.toList();
 //     // return posts as List<EmergencyResponseModel>;
 //     //return posts ;

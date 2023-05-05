@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gokul_f/layouts/global_dec.dart';
-import 'package:gokul_f/layouts/stepper.dart';
-import 'package:gokul_f/model/Location.dart';
 import 'package:gokul_f/model/selected_type.dart';
 import 'package:gokul_f/model/service_model.dart';
 
+//import '../model/selected_list_item.dart';
 import 'app_text.dart';
+//import 'app_text_field.dart';
 
-class DropDownLocation {
+class DropDownAssign {
   /// This will give the list of data.
-  final List<dynamic>? data;
+  final List<dynamic> data;
 
   /// This will give the call back to the selected items from list.
   final Function(List<dynamic>)? selectedItems;
@@ -18,7 +17,7 @@ class DropDownLocation {
   final Widget Function(int index)? listBuilder;
 
   /// This will give selection choice for single or multiple for list.
-  final bool enableMultipleSelection;
+  // final bool enableMultipleSelection;
 
   /// This gives the bottom sheet title.
   final Widget? bottomSheetTitle;
@@ -37,12 +36,12 @@ class DropDownLocation {
   /// This will set the background color to the dropdown.
   final Color dropDownBackgroundColor;
 
-  DropDownLocation({
+  DropDownAssign({
     Key? key,
     required this.data,
     this.selectedItems,
     this.listBuilder,
-    this.enableMultipleSelection = false,
+    //this.enableMultipleSelection = false,
     this.bottomSheetTitle,
     this.submitButtonChild,
     this.searchWidget,
@@ -51,10 +50,10 @@ class DropDownLocation {
   });
 }
 
-class DropDownLocationState {
-  DropDownLocation dropDown;
+class DropDownAssignState {
+  DropDownAssign dropDown;
 
-  DropDownLocationState(this.dropDown);
+  DropDownAssignState(this.dropDown);
 
   /// This gives the bottom sheet widget.
   void showModal(context) {
@@ -77,7 +76,7 @@ class DropDownLocationState {
 
 /// This is main class to display the bottom sheet body.
 class MainBody extends StatefulWidget {
-  final DropDownLocation dropDown;
+  final DropDownAssign dropDown;
 
   const MainBody({required this.dropDown, Key? key}) : super(key: key);
 
@@ -87,8 +86,8 @@ class MainBody extends StatefulWidget {
 
 class _MainBodyState extends State<MainBody> {
   /// This list will set when the list of data is not available.
-  List<dynamic>? mainList = [];
-  // List<String> unitNames = [];
+  List<dynamic> mainList = [];
+
   @override
   void initState() {
     super.initState();
@@ -115,6 +114,35 @@ class _MainBodyState extends State<MainBody> {
                   /// Bottom sheet title text
                   Expanded(
                       child: widget.dropDown.bottomSheetTitle ?? Container()),
+
+                  /// Done button
+                  // Visibility(
+                  //   visible: widget.dropDown.enableMultipleSelection,
+                  //   child: Align(
+                  //     alignment: Alignment.centerRight,
+                  //     child: Material(
+                  //       child: ElevatedButton(
+                  //         onPressed: () {
+                  //           List<dynamic> selectedList = widget.dropDown.data
+                  //               .where(
+                  //                   (element) => element['is_primary'] == true)
+                  //               .toList();
+                  //           List<dynamic> selectedNameList = [];
+
+                  //           for (var element in selectedList) {
+                  //             selectedNameList.add(element);
+                  //           }
+
+                  //           widget.dropDown.selectedItems
+                  //               ?.call(selectedNameList);
+                  //           _onUnFocusKeyboardAndPop();
+                  //         },
+                  //         child: widget.dropDown.submitButtonChild ??
+                  //             const Text('Done'),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -124,7 +152,7 @@ class _MainBodyState extends State<MainBody> {
               visible: widget.dropDown.isSearchVisible,
               child: widget.dropDown.searchWidget ??
                   AppTextField(
-                    // dropDown: widget.dropDown??{} ,
+                    // dropDown: widget.dropDown,
                     onTextChanged: _buildSearchList,
                   ),
             ),
@@ -133,93 +161,43 @@ class _MainBodyState extends State<MainBody> {
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
-                itemCount: mainList?.length,
+                itemCount: mainList.length,
                 itemBuilder: (context, index) {
-                  List<String> tenantNames = [];
-                  final address = mainList?[index]['address'] ?? '';
-
-                  List<Map<String, dynamic>> units =
-                      mainList?[index]['units'].cast<Map<String, dynamic>>() ??
-                          [];
-
-                  // print(unitNames);
-                  print(tenantNames);
+                  //    bool isSelected = mainList[index]['is_primary'] ?? false;
                   return InkWell(
                     child: Container(
                       color: widget.dropDown.dropDownBackgroundColor,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         child: ListTile(
-                          title: Container(
-                            color: Color.fromARGB(255, 202, 201, 201),
-                            child: Text(
-                              address ?? '-',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  //backgroundColor: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          subtitle: Column(
-                            children: units.map<Widget>((unit) {
-                              final tenantName = unit['name'] ?? '-';
-                              final tName = unit['tenant'] != null
-                                  ? unit['tenant']['name']
-                                  : '-';
-                              // setState(() {
-                              ClassA instanceOfClassA = ClassA();
-                              // });
-                              MyStepperState instanceOfClassB =
-                                  MyStepperState();
-                              return GestureDetector(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      tenantName,
-                                      // unitNames[index],
-                                      //unitNames.join(', '),
-                                      //tenantNames[index].toString(),
-                                      // mainList![index]['units'][index]['name'],
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        // fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 1,
-                                    ),
-                                    Text(
-                                      tName ?? [],
-                                      style: const TextStyle(),
-                                      maxLines: 1,
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  print('ad$address');
-                                  print('ten$tenantName');
-                                  print('tn$tName');
-
-                                  setState(() {
-                                    MyStepperState().tnn = tName ?? '';
-                                  });
-
-                                  // print(instanceOfClassA.tna);
-                                },
-                              );
-                            }).toList(),
-                          ),
+                          title: widget.dropDown.listBuilder?.call(index) ??
+                              Text(
+                                mainList[index]['full_name'],
+                              ),
+                          // trailing: widget.dropDown.enableMultipleSelection
+                          //     ? GestureDetector(
+                          //         onTap: () {
+                          //           setState(() {
+                          //             mainList[index]['is_primary'] =
+                          //                 !isSelected;
+                          //           });
+                          //         },
+                          //         child: isSelected
+                          //             ? const Icon(Icons.check_box)
+                          //             : const Icon(
+                          //                 Icons.check_box_outline_blank),
+                          //       )
+                          //     : const SizedBox(
+                          //         height: 0.0,
+                          //         width: 0.0,
+                          //       ),
                         ),
                       ),
                     ),
-                    onTap: widget.dropDown.enableMultipleSelection
-                        ? null
-                        : () {
-                            widget.dropDown.selectedItems
-                                ?.call([mainList?[index]]);
-                            _onUnFocusKeyboardAndPop();
-                          },
+                    onTap: () {
+                      widget.dropDown.selectedItems?.call([mainList[index]]);
+                      _onUnFocusKeyboardAndPop();
+                    },
                   );
                 },
               ),
@@ -233,7 +211,7 @@ class _MainBodyState extends State<MainBody> {
   /// This helps when search enabled & show the filtered data in list.
   _buildSearchList(String userSearchTerm) {
     final results = widget.dropDown.data
-        ?.where((element) => element['address']
+        .where((element) => element['full_name']
             .toLowerCase()
             .contains(userSearchTerm.toLowerCase()))
         .toList();
@@ -252,7 +230,6 @@ class _MainBodyState extends State<MainBody> {
   }
 
   void _setSearchWidgetListener() {
-    print('ml${widget.dropDown.data}');
     TextFormField? _searchField =
         (widget.dropDown.searchWidget as TextFormField?);
     _searchField?.controller?.addListener(() {

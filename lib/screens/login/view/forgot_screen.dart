@@ -18,7 +18,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
 
   TextEditingController emailController = TextEditingController();
   bool _isLoading = false;
-  late String _errorMessage;
 
   Future<void> _resetPassword() async {
     setState(() {
@@ -58,7 +57,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
       }
     } catch (error) {
       print(error);
-      setState(() => _errorMessage = 'An error occurred. Please try again.');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -161,7 +159,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                       bool emailValid = RegExp(
                               r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                           .hasMatch(value!);
-                      if (value!.isEmpty) {
+                      if (value.isEmpty) {
                         return "Enter email id";
                       } else if (!emailValid) {
                         return "Enter valid email";

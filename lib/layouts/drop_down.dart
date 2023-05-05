@@ -17,7 +17,7 @@ class DropDownCopy {
   final Widget Function(int index)? listBuilder;
 
   /// This will give selection choice for single or multiple for list.
-  final bool enableMultipleSelection;
+  // final bool enableMultipleSelection;
 
   /// This gives the bottom sheet title.
   final Widget? bottomSheetTitle;
@@ -41,7 +41,7 @@ class DropDownCopy {
     required this.data,
     this.selectedItems,
     this.listBuilder,
-    this.enableMultipleSelection = false,
+    //this.enableMultipleSelection = false,
     this.bottomSheetTitle,
     this.submitButtonChild,
     this.searchWidget,
@@ -116,33 +116,33 @@ class _MainBodyState extends State<MainBody> {
                       child: widget.dropDown.bottomSheetTitle ?? Container()),
 
                   /// Done button
-                  Visibility(
-                    visible: widget.dropDown.enableMultipleSelection,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Material(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            List<dynamic> selectedList = widget.dropDown.data
-                                .where(
-                                    (element) => element['is_primary'] == true)
-                                .toList();
-                            List<dynamic> selectedNameList = [];
+                  // Visibility(
+                  //   visible: widget.dropDown.enableMultipleSelection,
+                  //   child: Align(
+                  //     alignment: Alignment.centerRight,
+                  //     child: Material(
+                  //       child: ElevatedButton(
+                  //         onPressed: () {
+                  //           List<dynamic> selectedList = widget.dropDown.data
+                  //               .where(
+                  //                   (element) => element['is_primary'] == true)
+                  //               .toList();
+                  //           List<dynamic> selectedNameList = [];
 
-                            for (var element in selectedList) {
-                              selectedNameList.add(element);
-                            }
+                  //           for (var element in selectedList) {
+                  //             selectedNameList.add(element);
+                  //           }
 
-                            widget.dropDown.selectedItems
-                                ?.call(selectedNameList);
-                            _onUnFocusKeyboardAndPop();
-                          },
-                          child: widget.dropDown.submitButtonChild ??
-                              const Text('Done'),
-                        ),
-                      ),
-                    ),
-                  ),
+                  //           widget.dropDown.selectedItems
+                  //               ?.call(selectedNameList);
+                  //           _onUnFocusKeyboardAndPop();
+                  //         },
+                  //         child: widget.dropDown.submitButtonChild ??
+                  //             const Text('Done'),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -174,33 +174,30 @@ class _MainBodyState extends State<MainBody> {
                               Text(
                                 mainList[index]['name'],
                               ),
-                          trailing: widget.dropDown.enableMultipleSelection
-                              ? GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      mainList[index]['is_primary'] =
-                                          !isSelected;
-                                    });
-                                  },
-                                  child: isSelected
-                                      ? const Icon(Icons.check_box)
-                                      : const Icon(
-                                          Icons.check_box_outline_blank),
-                                )
-                              : const SizedBox(
-                                  height: 0.0,
-                                  width: 0.0,
-                                ),
+                          // trailing: widget.dropDown.enableMultipleSelection
+                          //     ? GestureDetector(
+                          //         onTap: () {
+                          //           setState(() {
+                          //             mainList[index]['is_primary'] =
+                          //                 !isSelected;
+                          //           });
+                          //         },
+                          //         child: isSelected
+                          //             ? const Icon(Icons.check_box)
+                          //             : const Icon(
+                          //                 Icons.check_box_outline_blank),
+                          //       )
+                          //     : const SizedBox(
+                          //         height: 0.0,
+                          //         width: 0.0,
+                          //       ),
                         ),
                       ),
                     ),
-                    onTap: widget.dropDown.enableMultipleSelection
-                        ? null
-                        : () {
-                            widget.dropDown.selectedItems
-                                ?.call([mainList[index]]);
-                            _onUnFocusKeyboardAndPop();
-                          },
+                    onTap: () {
+                      widget.dropDown.selectedItems?.call([mainList[index]]);
+                      _onUnFocusKeyboardAndPop();
+                    },
                   );
                 },
               ),

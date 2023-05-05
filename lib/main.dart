@@ -76,14 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     //logout();
-    //SchedulerBinding.instance.addPostFrameCallback((_) {
-    // add your code here.
-    Future.delayed(const Duration(seconds: 5))
-        .then((value) => {FlutterNativeSplash.remove()});
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MaterialPages()));
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // add your code here.
+      Future.delayed(const Duration(seconds: 5))
+          .then((value) => {FlutterNativeSplash.remove()});
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MaterialPages()));
 
-    //  });
+      //  });
+    });
   }
 
   @override

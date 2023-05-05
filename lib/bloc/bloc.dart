@@ -6,7 +6,6 @@ import 'package:gokul_f/model/emergency_model.dart';
 
 ///import 'package:gokul_f/repository/Posts_repo.dart';
 import 'package:gokul_f/repository/pagination_respository.dart';
-import 'package:http/http.dart';
 
 class PostBloc extends Bloc<PostEvent, PostsState> {
   ScrollController scrollController = ScrollController();
